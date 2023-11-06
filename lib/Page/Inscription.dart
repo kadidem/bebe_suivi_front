@@ -1,196 +1,252 @@
 import 'package:flutter/material.dart';
 import 'header.dart';
 import 'footer.dart';
+import 'package:form_field_validator/form_field_validator.dart'; // Importez le package
 
-class Inscription extends StatelessWidget {
+class Inscription extends StatefulWidget {
+
   const Inscription({super.key});
+
+  @override
+  State<Inscription> createState() => _InscriptionState();
+}
+
+class _InscriptionState extends State<Inscription> {
+  Color mycolors = Color(0xFFF28482);
+
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          Container(
-            width: MediaQuery.of(context).size.width,
-            color: Colors.amber,
-            child: const Header(),
-          ),
-          SizedBox(
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Container(
+              width: MediaQuery.of(context).size.width,
+              child: const Header(),
+            ),
+            SizedBox(
               height: 100,
               width: MediaQuery.of(context).size.width,
-              child: Image.asset(
-                'assets/image/logo.png',
-              )),
-          const Text(
-            "Inscription",
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 25,
-              fontWeight: FontWeight.normal,
-              fontStyle: FontStyle.italic,
+              child: Image.asset('assets/image/logo.png'),
             ),
-          ),
-          SingleChildScrollView(
-          child: Column(
-            children: [
+            const Text(
+              "Inscription",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 25,
+                fontWeight: FontWeight.normal,
+                fontStyle: FontStyle.italic,
+              ),
+            ),
+            Form(
+              key: _formKey,
+              child: Column(
+                children: [
                   Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical:8),
+                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 6),
                     child: Container(
+                      height: 45,
                       decoration: BoxDecoration(
                         color: Colors.white,
-                        border: Border.all(color: Colors.grey), // Couleur et style de la bordure
+                        border: Border.all(color: Colors.grey),
                         borderRadius: BorderRadius.circular(40.0),
                         boxShadow: const [
                           BoxShadow(
-                            color: Colors.grey, // Couleur de l'ombre
-                            offset: Offset(0,5), // Décalage de l'ombre (horizontal, vertical)
-                            blurRadius: 3.0, // Rayon de flou de l'ombre
+                            color: Colors.grey,
+                            offset: Offset(0, 5),
+                            blurRadius: 3.0,
                           ),
                         ],
                       ),
-                      child: const TextField(
+                      child: TextFormField(
+                        validator: MultiValidator([ // Utilisez MultiValidator pour plusieurs validations
+                          RequiredValidator(errorText: 'Ce champ est requis'),
+                        ]),
                         cursorColor: Color(0x00f28482),
-                        decoration: InputDecoration(
-                          hintText: 'Saisissez votre nom et prenom',
-                          contentPadding: EdgeInsets.symmetric( horizontal: 15.0),
+                        decoration: const InputDecoration(
+                          hintText: 'Saisissez votre nom et prénom',
+                          contentPadding: EdgeInsets.symmetric(horizontal: 15.0),
                           enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.transparent), // Trait invisible
+                            borderSide: BorderSide(color: Colors.transparent),
                           ),
                           focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.transparent), // Trait invisible au focus
+                            borderSide: BorderSide(color: Colors.transparent),
+                          ),
                         ),
+                      ),
+                    ),
+                  ),
+                 Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 6),
+                    child: Container(
+                      height: 45,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        border: Border.all(color: Colors.grey),
+                        borderRadius: BorderRadius.circular(40.0),
+                        boxShadow: const [
+                          BoxShadow(
+                            color: Colors.grey,
+                            offset: Offset(0, 5),
+                            blurRadius: 3.0,
+                          ),
+                        ],
+                      ),
+                      child: TextFormField(
+                        validator: MultiValidator([ // Utilisez MultiValidator pour plusieurs validations
+                          RequiredValidator(errorText: 'Ce champ est requis'),
+                        ]),
+                        cursorColor: Color(0x00f28482),
+                        decoration: const InputDecoration(
+                         hintText: 'Entrer votre  email',
+                          contentPadding: EdgeInsets.symmetric(horizontal: 15.0),
+                          enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.transparent),
+                          ),
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.transparent),
+                          ),
                         ),
                       ),
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20,vertical:8),
+                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 6),
                     child: Container(
+                      height: 45,
                       decoration: BoxDecoration(
                         color: Colors.white,
-                        border: Border.all(color: Colors.grey), // Couleur et style de la bordure
+                        border: Border.all(color: Colors.grey),
                         borderRadius: BorderRadius.circular(40.0),
                         boxShadow: const [
                           BoxShadow(
-                            color: Colors.grey, // Couleur de l'ombre
-                            offset: Offset(0,5), // Décalage de l'ombre (horizontal, vertical)
-                            blurRadius: 3.0, // Rayon de flou de l'ombre
+                            color: Colors.grey,
+                            offset: Offset(0, 5),
+                            blurRadius: 3.0,
                           ),
                         ],
                       ),
-                      child: const TextField(
+                      child: TextFormField(
+                        validator: MultiValidator([ // Utilisez MultiValidator pour plusieurs validations
+                          RequiredValidator(errorText: 'Ce champ est requis'),
+                        ]),
                         cursorColor: Color(0x00f28482),
-                        decoration: InputDecoration(
-                          hintText: 'Entrer votre  email',
-                          contentPadding: EdgeInsets.symmetric( horizontal: 15.0),
-                          enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.transparent), // Trait invisible
-                          ),
-                          focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.transparent), // Trait invisible au focus
-                        ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical:8),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        border: Border.all(color: Colors.grey), // Couleur et style de la bordure
-                        borderRadius: BorderRadius.circular(40.0),
-                        boxShadow: const [
-                          BoxShadow(
-                            color: Colors.grey, // Couleur de l'ombre
-                            offset: Offset(0,5), // Décalage de l'ombre (horizontal, vertical)
-                            blurRadius: 3.0, // Rayon de flou de l'ombre
-                          ),
-                        ],
-                      ),
-                      child: const TextField(
-                        cursorColor: Color(0x00f28482),
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           hintText: 'Entrez votre numero',
-                          contentPadding: EdgeInsets.symmetric( horizontal: 15.0),
+                          contentPadding: EdgeInsets.symmetric(horizontal: 15.0),
                           enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.transparent), // Trait invisible
+                            borderSide: BorderSide(color: Colors.transparent),
                           ),
                           focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.transparent), // Trait invisible au focus
-                        ),
+                            borderSide: BorderSide(color: Colors.transparent),
+                          ),
                         ),
                       ),
                     ),
                   ),
                   Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical:8),
+                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 6),
                     child: Container(
+                      height: 45,
                       decoration: BoxDecoration(
                         color: Colors.white,
-                        border: Border.all(color: Colors.grey), // Couleur et style de la bordure
+                        border: Border.all(color: Colors.grey),
                         borderRadius: BorderRadius.circular(40.0),
                         boxShadow: const [
                           BoxShadow(
-                            color: Colors.grey, // Couleur de l'ombre
-                            offset: Offset(0,5), // Décalage de l'ombre (horizontal, vertical)
-                            blurRadius: 3.0, // Rayon de flou de l'ombre
+                            color: Colors.grey,
+                            offset: Offset(0, 5),
+                            blurRadius: 3.0,
                           ),
                         ],
                       ),
-                      child: const TextField(
+                      child: TextFormField(
+                        validator: MultiValidator([ // Utilisez MultiValidator pour plusieurs validations
+                          RequiredValidator(errorText: 'Ce champ est requis'),
+                        ]),
                         cursorColor: Color(0x00f28482),
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           hintText: 'Entrez votre adresse',
-                          contentPadding: EdgeInsets.symmetric( horizontal: 15.0),
+                          contentPadding: EdgeInsets.symmetric(horizontal: 15.0),
                           enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.transparent), // Trait invisible
+                            borderSide: BorderSide(color: Colors.transparent),
                           ),
                           focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.transparent), // Trait invisible au focus
-                        ),
+                            borderSide: BorderSide(color: Colors.transparent),
+                          ),
                         ),
                       ),
                     ),
                   ),
                   Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical:8),
+                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 6),
                     child: Container(
+                      height: 45,
                       decoration: BoxDecoration(
                         color: Colors.white,
-                        border: Border.all(color: Colors.grey), // Couleur et style de la bordure
+                        border: Border.all(color: Colors.grey),
                         borderRadius: BorderRadius.circular(40.0),
                         boxShadow: const [
                           BoxShadow(
-                            color: Colors.grey, // Couleur de l'ombre
-                            offset: Offset(0,5), // Décalage de l'ombre (horizontal, vertical)
-                            blurRadius: 3.0, // Rayon de flou de l'ombre
+                            color: Colors.grey,
+                            offset: Offset(0, 5),
+                            blurRadius: 3.0,
                           ),
                         ],
                       ),
-                      child: const TextField(
-                        obscureText: true, 
+                      child: TextFormField(
+                        validator: MultiValidator([ // Utilisez MultiValidator pour plusieurs validations
+                          RequiredValidator(errorText: 'Ce champ est requis'),
+                        ]),
+                        obscureText: true,
                         cursorColor: Color(0x00f28482),
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           hintText: 'Entrez votre mots de passe',
-                          contentPadding: EdgeInsets.symmetric( horizontal: 15.0),
+                          contentPadding: EdgeInsets.symmetric(horizontal: 15.0),
                           enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.transparent), // Trait invisible
+                            borderSide: BorderSide(color: Colors.transparent),
                           ),
                           focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.transparent), // Trait invisible au focus
-                        ),
+                            borderSide: BorderSide(color: Colors.transparent),
+                          ),
                         ),
                       ),
                     ),
                   ),
-        ]
-        )
-        )
-        ],
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(5.0),
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                height: 30,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: mycolors,
+                    onPrimary: Colors.white,
+                  ),
+                  onPressed: () {
+                    if (_formKey.currentState!.validate()) {
+                      // Le formulaire est valide, effectuez l'action de validation ici
+                    }
+                  },
+                  child: const Text(
+                    'Valider',
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
       bottomNavigationBar: Footer(),
-       // Utilisez le widget de pied de page ici
     );
   }
 }

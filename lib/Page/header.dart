@@ -25,20 +25,16 @@ class Header extends StatelessWidget {
   const Header({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Stack(
-        children: [
-          
-          Align(
-            alignment: Alignment.topLeft,
-            child: Image.asset(
-             
-              'assets/image/header.png',
-              //fit: BoxFit.cover,
-            ),
+    return Stack(
+      children: [
+        Align(
+          alignment: Alignment.topLeft,
+          child: Image.asset(
+            'assets/image/header.png',
+            fit: BoxFit.cover,
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
