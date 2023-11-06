@@ -28,16 +28,19 @@ import 'package:flutter/material.dart';
   class Footer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Align(
-          alignment: Alignment.bottomRight,
-          child: Image.asset(
-            'assets/image/footer.png',
-            fit: BoxFit.cover,
+    return Container(
+      height: 100,
+      child: Stack(
+        children: [
+          Align(
+            alignment: Alignment.bottomRight,
+            child: Image.asset(
+              'assets/image/footer.png',
+              fit: BoxFit.cover,
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
