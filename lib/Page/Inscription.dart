@@ -1,3 +1,6 @@
+import 'package:bebe_suivi/Page/Connexion.dart';
+import 'package:bebe_suivi/Service/UserService.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'header.dart';
 import 'footer.dart';
@@ -11,14 +14,19 @@ class Inscription extends StatefulWidget {
 }
 
 class _InscriptionState extends State<Inscription> {
-  Color mycolors = Color(0xFFF28482);
-
+  Color mycolors = const Color(0xFFF28482);
+  userService service = userService();
   final _formKey = GlobalKey<FormState>();
+  TextEditingController nomPrenomController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController adresseController = TextEditingController();
+  TextEditingController numeroController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
+      body: Center(
         child: Column(
           children: [
             SizedBox(
@@ -26,7 +34,7 @@ class _InscriptionState extends State<Inscription> {
               child: const Header(),
             ),
             SizedBox(
-              height: 100,
+              height: 80,
               width: MediaQuery.of(context).size.width,
               child: Image.asset('assets/image/logo.png'),
             ),
@@ -61,6 +69,7 @@ class _InscriptionState extends State<Inscription> {
                         ],
                       ),
                       child: TextFormField(
+                        controller: nomPrenomController,
                         validator: MultiValidator([
                           // Utilisez MultiValidator pour plusieurs validations
                           RequiredValidator(errorText: 'Ce champ est requis'),
@@ -98,6 +107,7 @@ class _InscriptionState extends State<Inscription> {
                         ],
                       ),
                       child: TextFormField(
+                        controller: emailController,
                         validator: MultiValidator([
                           // Utilisez MultiValidator pour plusieurs validations
                           RequiredValidator(errorText: 'Ce champ est requis'),
@@ -135,6 +145,7 @@ class _InscriptionState extends State<Inscription> {
                         ],
                       ),
                       child: TextFormField(
+                        controller: numeroController,
                         validator: MultiValidator([
                           // Utilisez MultiValidator pour plusieurs validations
                           RequiredValidator(errorText: 'Ce champ est requis'),
@@ -172,6 +183,7 @@ class _InscriptionState extends State<Inscription> {
                         ],
                       ),
                       child: TextFormField(
+                        controller: adresseController,
                         validator: MultiValidator([
                           // Utilisez MultiValidator pour plusieurs validations
                           RequiredValidator(errorText: 'Ce champ est requis'),
@@ -209,6 +221,7 @@ class _InscriptionState extends State<Inscription> {
                         ],
                       ),
                       child: TextFormField(
+                        controller: passwordController,
                         validator: MultiValidator([
                           // Utilisez MultiValidator pour plusieurs validations
                           RequiredValidator(errorText: 'Ce champ est requis'),
@@ -235,16 +248,46 @@ class _InscriptionState extends State<Inscription> {
             Padding(
               padding: const EdgeInsets.all(5.0),
               child: Container(
-                width: MediaQuery.of(context).size.width,
                 height: 30,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     backgroundColor: mycolors,
                     onPrimary: Colors.white,
                   ),
-                  onPressed: () {
+                  onPressed: () async {
                     if (_formKey.currentState!.validate()) {
-                      // Le formulaire est valide, effectuez l'action de validation ici
+                      final response = await service.saveUser(
+                        nomPrenomController.text,
+                        emailController.text,
+                        passwordController.text,
+                        adresseController.text,
+                        numeroController.text,
+                      );
+
+                      if (response.statusCode == 200) {
+                        nomPrenomController.clear();
+                        emailController.clear();
+                        passwordController.clear();
+                        adresseController.clear();
+                        numeroController.clear();
+                        // L'enregistrement a réussi, vous pouvez gérer la réponse ici
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('Inscription réussie!'),
+                            backgroundColor: Color(0xFFF28482),
+                            elevation: 100,
+                          ),
+                        );
+                      } else {
+                        // L'enregistrement a échoué, affichez un message d'erreur à l'utilisateur
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('Erreur lors de l\'inscription.'),
+                            backgroundColor: Color(0xFFF28482),
+                            elevation: 30,
+                          ),
+                        );
+                      }
                     }
                   },
                   child: const Text(
@@ -253,6 +296,40 @@ class _InscriptionState extends State<Inscription> {
                       fontSize: 18,
                       color: Colors.white,
                     ),
+                  ),
+                ),
+              ),
+            ),
+            Center(
+              child: Padding(
+                padding: const EdgeInsets.only(top: 30.0),
+                child: RichText(
+                  text: TextSpan(
+                    // style: DefaultTextStyle.of(context).style,
+                    children: [
+                      const TextSpan(
+                        text: 'Vous avez déjà un compte ? ',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 14.0,
+                        ),
+                      ),
+                      TextSpan(
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => Connexion()));
+                          },
+                        text: 'Se connecter',
+                        style: TextStyle(
+                          color: mycolors,
+                          fontSize: 16.0,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),

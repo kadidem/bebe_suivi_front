@@ -11,6 +11,7 @@ class _AcceuilPatientState extends State<AcceuilPatient> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: null,
       body: SingleChildScrollView(
         child: Column(children: [
           Row(
@@ -18,13 +19,13 @@ class _AcceuilPatientState extends State<AcceuilPatient> {
               SizedBox(
                 height: 50,
                 //  width: MediaQuery.of(context).size.width,
-                child: Image.asset('assets/image/logo.png'),
+                child: Image.asset('assets/image/profil.png'),
               ),
               const SizedBox(width: 260),
               SizedBox(
                 height: 50,
                 //width: MediaQuery.of(context).size.width,
-                child: Image.asset('assets/image/logo.png'),
+                child: Image.asset('assets/image/notif.png'),
               ),
             ],
           ),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'header.dart';
-import 'footer.dart';
+import '../header.dart';
+import '../footer.dart';
 import 'package:form_field_validator/form_field_validator.dart'; // Importez le package
 
 class Modification extends StatefulWidget {
