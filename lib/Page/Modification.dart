@@ -3,15 +3,15 @@ import 'header.dart';
 import 'footer.dart';
 import 'package:form_field_validator/form_field_validator.dart'; // Importez le package
 
-class Inscription extends StatefulWidget {
-  const Inscription({super.key});
+class Modification extends StatefulWidget {
+  const Modification({super.key});
 
   @override
-  State<Inscription> createState() => _InscriptionState();
+  State<Modification> createState() => _ModificationState();
 }
 
-class _InscriptionState extends State<Inscription> {
-  Color mycolors = Color(0xFFF28482);
+class _ModificationState extends State<Modification> {
+  Color mycolors = const Color(0xFFF28482);
 
   final _formKey = GlobalKey<FormState>();
 
@@ -248,7 +248,7 @@ class _InscriptionState extends State<Inscription> {
                     }
                   },
                   child: const Text(
-                    "s'inscrire",
+                    "Modifier",
                     style: TextStyle(
                       fontSize: 18,
                       color: Colors.white,
