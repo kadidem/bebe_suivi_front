@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class userService {
   //create the method to save user
@@ -31,7 +33,20 @@ class userService {
     return response;
   }
 
-  Future<void> loginUser(String email, String password) async {
+  Future<void> saveUserInfo(String responseJson, email, password) async {
+    final jsonResponse = json.decode(responseJson);
+
+    final userId = jsonResponse['idUser'];
+    final email = jsonResponse['email'];
+    final password = jsonResponse['motDePasse'];
+
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setString('idUser', userId.toString());
+    prefs.setString('email', email);
+    prefs.setString('motDePasse', password);
+  }
+
+  Future loginUser(String email, String password) async {
     const apiUrl = 'http://localhost:8080/user/login';
 
     final response = await http.post(
@@ -42,8 +57,11 @@ class userService {
       },
     );
 
+    debugPrint(response.body);
+    print(response);
     if (response.statusCode == 200) {
       // Connexion réussie
+      return response.body;
       print('Connexion réussie');
     } else {
       // Identifiants invalides

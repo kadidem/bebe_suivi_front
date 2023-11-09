@@ -1,7 +1,9 @@
 //import 'package:bebe_suivi/Page/Demarrage.dart';
 // import 'package:bebe_suivi/Page/Demarrage.dart';
-import 'package:bebe_suivi/Page/Connexion.dart';
-import 'package:bebe_suivi/Page/Inscription.dart';
+// import 'package:bebe_suivi/Page/Connexion.dart';
+// import 'package:bebe_suivi/Page/Inscription.dart';
+import 'package:bebe_suivi/Page/Patient/AcceuilPatient.dart';
+import 'package:bebe_suivi/Page/Patient/grossesse.dart';
 //import 'package:bebe_suivi/Page/Patient/Navigation.dart';
 //import 'package:bebe_suivi/Page/Patient/Connexion.dart';
 //import 'package:bebe_suivi/Page/Patient/Inscription.dart';
@@ -26,6 +28,6 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: const Connexion());
+        home: const AcceuilPatient());
   }
 }

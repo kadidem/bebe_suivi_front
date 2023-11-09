@@ -141,20 +141,18 @@ class _ConnexionState extends State<Connexion> {
                   ),
                   onPressed: () async {
                     try {
-                      // Appeler la méthode loginUser du service
-                      await service.loginUser(
+                      final user = await service.loginUser(
                           emailController.text, passwordController.text);
 
-                      // Effacer les champs de texte
-                      // _emailController.clear();
-                      // _passwordController.clear();
+                      await service.saveUserInfo(
+                          user.idUser, user.email, user.password);
 
-                      // Naviguer vers la page d'accueil
-                      // ignore: use_build_context_synchronously
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => Demarrage()),
-                      );
+                      //   print(user);
+
+                      //    Navigator.push(
+                      //      context,
+                      //     MaterialPageRoute(builder: (context) => Demarrage()),
+                      //   );
                     } catch (e) {
                       // Gérer les erreurs de connexion
                       // ignore: avoid_print

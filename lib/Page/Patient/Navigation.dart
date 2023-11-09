@@ -4,7 +4,7 @@ import 'package:bebe_suivi/Page/Patient/Docteur.dart';
 import 'package:bebe_suivi/Page/Patient/Forum.dart';
 import 'package:bebe_suivi/Page/Patient/Medicament.dart';
 import 'package:bebe_suivi/Page/Patient/Rdv.dart';
-import 'package:bebe_suivi/Page/Patient/grossesse.dart';
+import 'package:bebe_suivi/Page/Patient/Grossesse.dart';
 import 'package:flutter/material.dart';
 
 class Navigation extends StatefulWidget {
