@@ -31,29 +31,23 @@ class userService {
     return response;
   }
 
-  static const String apiUrl = 'http://localhost:8080/user/login';
+  Future<void> loginUser(String email, String password) async {
+    const apiUrl = 'http://localhost:8080/user/login';
 
-  static Future loginUser(String email, String password) async {
-    try {
-      final response = await http.post(
-        Uri.parse(apiUrl),
-        body: jsonEncode({
-          'email': email,
-          'motDePasse': password,
-        }),
-        headers: {'Content-Type': 'application/json'},
-      );
+    final response = await http.post(
+      Uri.parse(apiUrl),
+      body: {
+        'email': email,
+        'motDePasse': password,
+      },
+    );
 
-      if (response.statusCode == 200) {
-        // Connexion réussie
-        print('Connexion réussie');
-      } else {
-        // Identifiants invalides
-        print('Identifiants invalides');
-      }
-    } catch (e) {
-      // Gérer les erreurs de connexion
-      print('Erreur de connexion: $e');
+    if (response.statusCode == 200) {
+      // Connexion réussie
+      print('Connexion réussie');
+    } else {
+      // Identifiants invalides
+      print('Identifiants invalides');
     }
   }
 }

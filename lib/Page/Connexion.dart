@@ -1,3 +1,4 @@
+import 'package:bebe_suivi/Page/Demarrage.dart';
 import 'package:bebe_suivi/Page/Inscription.dart';
 import 'package:bebe_suivi/Service/UserService.dart';
 import 'package:flutter/gestures.dart';
@@ -17,9 +18,9 @@ class _ConnexionState extends State<Connexion> {
   Color mycolors = const Color(0xFFF28482);
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-   userService service = userService();
+  userService service = userService();
   final _formKey = GlobalKey<FormState>();
-
+  bool isConnectionSuccessful = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -66,7 +67,7 @@ class _ConnexionState extends State<Connexion> {
                         ],
                       ),
                       child: TextFormField(
-                         controller: emailController,
+                        controller: emailController,
                         validator: MultiValidator([
                           // Utilisez MultiValidator pour plusieurs validations
                           RequiredValidator(errorText: 'Ce champ est requis'),
@@ -138,32 +139,74 @@ class _ConnexionState extends State<Connexion> {
                     foregroundColor: Colors.white,
                     backgroundColor: mycolors,
                   ),
+                  onPressed: () async {
+                    try {
+                      // Appeler la méthode loginUser du service
+                      await service.loginUser(
+                          emailController.text, passwordController.text);
 
-                   onPressed: () async {
-                      final email = emailController.text;
-                      final password = passwordController.text;
+                      // Effacer les champs de texte
+                      // _emailController.clear();
+                      // _passwordController.clear();
 
-                      final response = await userService.loginUser(email, password);
-
-                      if (response.statusCode == 200) {
-                        // Connexion réussie
+                      // Naviguer vers la page d'accueil
+                      // ignore: use_build_context_synchronously
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Demarrage()),
+                      );
+                    } catch (e) {
+                      // Gérer les erreurs de connexion
+                      // ignore: avoid_print
+                      print('Erreur de connexion : $e');
+                      if (e.toString().contains('Identifiants invalides')) {
+                        // La connexion a échoué en raison d'identifiants invalides
+                        // ignore: use_build_context_synchronously
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
-                            content: Text('Connexion réussie'),
+                            content: Text(
+                                'Identifiants invalides. Veuillez réessayer.'),
                           ),
                         );
-                        print('Connexion réussie');
                       } else {
-                        // Identifiants invalides ou autre erreur d'authentification
+                        // Gérer d'autres erreurs de connexion
+                        // ignore: use_build_context_synchronously
                         ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text('Identifiants invalides ou erreur de connexion'),
+                          const SnackBar(
+                            content: Text(
+                                'Erreur de connexion. Veuillez réessayer.'),
                           ),
                         );
-                        print('Erreur de connexion: ${response.body}');
                       }
-                    },
-                  
+                    }
+                    //
+                    //   try {
+                    //     // Appeler la méthode loginUser du service
+                    //     await service.loginUser(
+                    //         emailController.text, passwordController.text);
+
+                    //     // Effacer les champs de texte
+                    //     // _emailController.clear();
+                    //     // _passwordController.clear();
+
+                    //     // Naviguer vers la page d'accueil
+                    //     // ignore: use_build_context_synchronously
+                    //     Navigator.push(
+                    //       context,
+                    //       MaterialPageRoute(builder: (context) => Demarrage()),
+                    //     );
+                    //   } catch (e) {
+                    //     // Gérer les erreurs de connexion
+                    //     // ignore: avoid_print
+                    //     print('Erreur de connexion : $e');
+                    //     // ignore: use_build_context_synchronously
+                    //     ScaffoldMessenger.of(context).showSnackBar(
+                    //       const SnackBar(
+                    //           content: Text(
+                    //               'Erreur de connexion. Veuillez réessayer.')),
+                    //     );
+                    //   }
+                  },
                   child: const Text(
                     'Se connecter',
                     style: TextStyle(
