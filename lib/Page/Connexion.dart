@@ -1,8 +1,15 @@
+import 'dart:convert';
+
+import 'package:bebe_suivi/Modele/UserModel.dart';
 import 'package:bebe_suivi/Page/Demarrage.dart';
 import 'package:bebe_suivi/Page/Inscription.dart';
+import 'package:bebe_suivi/Page/Patient/AcceuilPatient.dart';
 import 'package:bebe_suivi/Service/UserService.dart';
+import 'package:bebe_suivi/UserProvider.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 import 'header.dart';
 import 'footer.dart';
 import 'package:form_field_validator/form_field_validator.dart'; // Importez le package
@@ -73,6 +80,7 @@ class _ConnexionState extends State<Connexion> {
                           RequiredValidator(errorText: 'Ce champ est requis'),
                         ]),
                         cursorColor: Color(0x00f28482),
+                        keyboardType: TextInputType.emailAddress,
                         decoration: const InputDecoration(
                           hintText: 'Entrer votre  email',
                           contentPadding:
@@ -112,6 +120,7 @@ class _ConnexionState extends State<Connexion> {
                         ]),
                         obscureText: true,
                         cursorColor: Color(0x00f28482),
+                        keyboardType: TextInputType.visiblePassword,
                         decoration: const InputDecoration(
                           hintText: 'Entrez votre mots de passe',
                           contentPadding:
@@ -141,69 +150,39 @@ class _ConnexionState extends State<Connexion> {
                   ),
                   onPressed: () async {
                     try {
-                      final user = await service.loginUser(
+                      // Appeler la méthode loginUser du service
+                      final UserModel? user = await service.loginUser(
                           emailController.text, passwordController.text);
+                      print(user);
 
-                      await service.saveUserInfo(
-                          user.idUser, user.email, user.password);
-
-                      //   print(user);
-
-                      //    Navigator.push(
-                      //      context,
-                      //     MaterialPageRoute(builder: (context) => Demarrage()),
-                      //   );
-                    } catch (e) {
-                      // Gérer les erreurs de connexion
-                      // ignore: avoid_print
-                      print('Erreur de connexion : $e');
-                      if (e.toString().contains('Identifiants invalides')) {
-                        // La connexion a échoué en raison d'identifiants invalides
-                        // ignore: use_build_context_synchronously
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text(
-                                'Identifiants invalides. Veuillez réessayer.'),
-                          ),
+                      if (user != null) {
+                        Provider.of<UserProvider>(context, listen: false)
+                            .setUser(user);
+                        // Naviguer vers la page d'accueil
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => AcceuilPatient()),
                         );
                       } else {
-                        // Gérer d'autres erreurs de connexion
-                        // ignore: use_build_context_synchronously
+                        // Gérer le cas où loginUser renvoie null
+                        print('Erreur de connexion : utilisateur null');
                         ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
+                          SnackBar(
                             content: Text(
                                 'Erreur de connexion. Veuillez réessayer.'),
                           ),
                         );
                       }
+                    } catch (e) {
+                      // Gérer les erreurs de connexion
+                      print('Erreur de connexion : $e');
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                            content: Text(
+                                'Erreur de connexion. Veuillez réessayer.')),
+                      );
                     }
-                    //
-                    //   try {
-                    //     // Appeler la méthode loginUser du service
-                    //     await service.loginUser(
-                    //         emailController.text, passwordController.text);
-
-                    //     // Effacer les champs de texte
-                    //     // _emailController.clear();
-                    //     // _passwordController.clear();
-
-                    //     // Naviguer vers la page d'accueil
-                    //     // ignore: use_build_context_synchronously
-                    //     Navigator.push(
-                    //       context,
-                    //       MaterialPageRoute(builder: (context) => Demarrage()),
-                    //     );
-                    //   } catch (e) {
-                    //     // Gérer les erreurs de connexion
-                    //     // ignore: avoid_print
-                    //     print('Erreur de connexion : $e');
-                    //     // ignore: use_build_context_synchronously
-                    //     ScaffoldMessenger.of(context).showSnackBar(
-                    //       const SnackBar(
-                    //           content: Text(
-                    //               'Erreur de connexion. Veuillez réessayer.')),
-                    //     );
-                    //   }
                   },
                   child: const Text(
                     'Se connecter',

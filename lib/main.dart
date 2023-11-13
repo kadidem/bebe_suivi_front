@@ -1,18 +1,14 @@
-//import 'package:bebe_suivi/Page/Demarrage.dart';
-// import 'package:bebe_suivi/Page/Demarrage.dart';
-// import 'package:bebe_suivi/Page/Connexion.dart';
-// import 'package:bebe_suivi/Page/Inscription.dart';
-import 'package:bebe_suivi/Page/Patient/AcceuilPatient.dart';
-import 'package:bebe_suivi/Page/Patient/grossesse.dart';
-//import 'package:bebe_suivi/Page/Patient/Navigation.dart';
-//import 'package:bebe_suivi/Page/Patient/Connexion.dart';
-//import 'package:bebe_suivi/Page/Patient/Inscription.dart';
-//import 'package:bebe_suivi/Page/header.dart';
-//import 'package:bebe_suivi/Page/footer.dart';
+import 'package:bebe_suivi/Page/Connexion.dart';
+import 'package:bebe_suivi/UserProvider.dart';
+import 'package:bebe_suivi/utils/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(ChangeNotifierProvider(
+    create: (context) => UserProvider(),
+    child: MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -25,9 +21,9 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'bebesuivi',
         theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          colorScheme: ColorScheme.fromSeed(seedColor: primary),
           useMaterial3: true,
         ),
-        home: const AcceuilPatient());
+        home: const Connexion());
   }
 }
