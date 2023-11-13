@@ -1,7 +1,15 @@
+import 'dart:convert';
+
+import 'package:bebe_suivi/Modele/UserModel.dart';
+import 'package:bebe_suivi/Page/Demarrage.dart';
 import 'package:bebe_suivi/Page/Inscription.dart';
+import 'package:bebe_suivi/Page/Patient/AcceuilPatient.dart';
 import 'package:bebe_suivi/Service/UserService.dart';
+import 'package:bebe_suivi/UserProvider.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 import 'header.dart';
 import 'footer.dart';
 import 'package:form_field_validator/form_field_validator.dart'; // Importez le package
@@ -17,9 +25,9 @@ class _ConnexionState extends State<Connexion> {
   Color mycolors = const Color(0xFFF28482);
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-   userService service = userService();
+  userService service = userService();
   final _formKey = GlobalKey<FormState>();
-
+  bool isConnectionSuccessful = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -66,12 +74,13 @@ class _ConnexionState extends State<Connexion> {
                         ],
                       ),
                       child: TextFormField(
-                         controller: emailController,
+                        controller: emailController,
                         validator: MultiValidator([
                           // Utilisez MultiValidator pour plusieurs validations
                           RequiredValidator(errorText: 'Ce champ est requis'),
                         ]),
                         cursorColor: Color(0x00f28482),
+                        keyboardType: TextInputType.emailAddress,
                         decoration: const InputDecoration(
                           hintText: 'Entrer votre  email',
                           contentPadding:
@@ -111,6 +120,7 @@ class _ConnexionState extends State<Connexion> {
                         ]),
                         obscureText: true,
                         cursorColor: Color(0x00f28482),
+                        keyboardType: TextInputType.visiblePassword,
                         decoration: const InputDecoration(
                           hintText: 'Entrez votre mots de passe',
                           contentPadding:
@@ -138,32 +148,42 @@ class _ConnexionState extends State<Connexion> {
                     foregroundColor: Colors.white,
                     backgroundColor: mycolors,
                   ),
+                  onPressed: () async {
+                    try {
+                      // Appeler la méthode loginUser du service
+                      final UserModel? user = await service.loginUser(
+                          emailController.text, passwordController.text);
+                      print(user);
 
-                   onPressed: () async {
-                      final email = emailController.text;
-                      final password = passwordController.text;
-
-                      final response = await userService.loginUser(email, password);
-
-                      if (response.statusCode == 200) {
-                        // Connexion réussie
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text('Connexion réussie'),
-                          ),
+                      if (user != null) {
+                        Provider.of<UserProvider>(context, listen: false)
+                            .setUser(user);
+                        // Naviguer vers la page d'accueil
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => AcceuilPatient()),
                         );
-                        print('Connexion réussie');
                       } else {
-                        // Identifiants invalides ou autre erreur d'authentification
+                        // Gérer le cas où loginUser renvoie null
+                        print('Erreur de connexion : utilisateur null');
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
-                            content: Text('Identifiants invalides ou erreur de connexion'),
+                            content: Text(
+                                'Erreur de connexion. Veuillez réessayer.'),
                           ),
                         );
-                        print('Erreur de connexion: ${response.body}');
                       }
-                    },
-                  
+                    } catch (e) {
+                      // Gérer les erreurs de connexion
+                      print('Erreur de connexion : $e');
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                            content: Text(
+                                'Erreur de connexion. Veuillez réessayer.')),
+                      );
+                    }
+                  },
                   child: const Text(
                     'Se connecter',
                     style: TextStyle(
