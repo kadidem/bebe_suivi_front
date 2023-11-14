@@ -1,3 +1,8 @@
+import 'package:bebe_suivi/Modele/MedicamentModel.dart';
+import 'package:bebe_suivi/Service/MedicamentService.dart';
+import 'package:bebe_suivi/widgets/custom_button.dart';
+import 'package:flutter/material.dart';
+
 class MedicamentEdit extends StatefulWidget {
   final MedicamentModel medicament;
 
@@ -57,8 +62,8 @@ class _MedicamentEditState extends State<MedicamentEdit> {
                       // ... Autres décorations ici ...
                       child: TextFormField(
                         controller: NomController,
-                        validator: // ... Validateur ici ...
-                        decoration: const InputDecoration(
+                        validator: // ... Validateur ici ...,
+                       , decoration: const InputDecoration(
                           hintText: 'Nom du médicament',
                           contentPadding: EdgeInsets.symmetric(horizontal: 15.0),
                         ),

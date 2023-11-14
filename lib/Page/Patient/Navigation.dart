@@ -2,6 +2,7 @@ import 'package:bebe_suivi/Page/Patient/AcceuilPatient.dart';
 import 'package:bebe_suivi/Page/Patient/Bebe.dart';
 import 'package:bebe_suivi/Page/Patient/Docteur.dart';
 import 'package:bebe_suivi/Page/Patient/Forum.dart';
+import 'package:bebe_suivi/Page/Patient/GrossesseListe.dart';
 import 'package:bebe_suivi/Page/Patient/Medicament.dart';
 import 'package:bebe_suivi/Page/Patient/Rdv.dart';
 import 'package:bebe_suivi/Page/Patient/Grossesse.dart';
@@ -21,12 +22,12 @@ class _NavigationState extends State<Navigation> {
 
   final pages = [
     const AcceuilPatient(),
+    const GrossesseListe(),
     const Bebe(),
-    const Docteur(),
-    const Forum(),
-    const Grossesse(),
     Medicament(),
     const Rdv(),
+    const Docteur(),
+    const Forum(),
   ];
 
   @override
@@ -85,8 +86,7 @@ class _NavigationState extends State<Navigation> {
                           height: 35,
                         )
                       : Image.asset(
-                          'assets/image/bebe.png', // Remplacez 'assets/home_outlined.png' par le chemin de votre image
-                          //color: Colors.white,
+                          'assets/image/bebe.png',
                           width: 35,
                           height: 35,
                         ),
@@ -146,7 +146,7 @@ class _NavigationState extends State<Navigation> {
                 ],
               ),
             ),
-            // IconButton(
+            //= IconButton(
             //   enableFeedback: false,
             //   onPressed: () {
             //     setState(() {

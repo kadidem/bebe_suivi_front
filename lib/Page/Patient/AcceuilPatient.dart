@@ -1,3 +1,4 @@
+import 'package:bebe_suivi/Page/Patient/Profil.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -15,7 +16,7 @@ class _AcceuilPatientState extends State<AcceuilPatient> {
   Widget build(BuildContext context) {
     final userProvider = Provider.of<UserProvider>(context);
     final user = userProvider.user;
-    String userName = userProvider.user?.email ?? "utilisateur";
+    String userName = userProvider.user?.nom_prenom ?? "utilisateur";
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
@@ -26,9 +27,18 @@ class _AcceuilPatientState extends State<AcceuilPatient> {
               children: [
                 SizedBox(
                   height: 80,
-                  //  width: MediaQuery.of(context).size.width,
-                  child: Image.asset('assets/image/profil.png'),
+                  child: GestureDetector(
+                    onTap: () {
+                      // Utiliser Navigator.push pour naviguer vers la nouvelle page
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const Profil()),
+                      );
+                    },
+                    child: Image.asset('assets/image/profil.png'),
+                  ),
                 ),
+
                 //const SizedBox(width: 200),
                 SizedBox(
                   height: 80,

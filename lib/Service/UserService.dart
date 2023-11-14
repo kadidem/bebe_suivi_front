@@ -31,7 +31,7 @@ class userService {
     return response;
   }
 
-  Future loginUser(String email, String password) async {
+  Future<UserModel> loginUser(String email, String password) async {
     const apiUrl = 'http://localhost:8080/user/login';
 
     final response = await http.post(
@@ -44,14 +44,14 @@ class userService {
 
     if (response.statusCode == 200) {
       final Map<String, dynamic> responseData = json.decode(response.body);
-      final UserModel user = UserModel.fromJson(responseData);
-
+      final user = UserModel.fromJson(responseData);
+      print(user);
+      print("qwertyuytggsd");
       // Retournez l'utilisateur connecté
       return user;
     } else {
       // Identifiants invalides
-      print('Identifiants invalides');
-      return null;
+      throw Exception("asdfghjk");
     }
   }
 

@@ -1,4 +1,13 @@
 import 'package:bebe_suivi/Page/Connexion.dart';
+import 'package:bebe_suivi/Page/Patient/AddRendezvous.dart';
+import 'package:bebe_suivi/Page/Patient/Bebe.dart';
+import 'package:bebe_suivi/Page/Patient/BebeAdd.dart';
+import 'package:bebe_suivi/Page/Patient/Medicament.dart';
+import 'package:bebe_suivi/Page/Patient/Navigation.dart';
+import 'package:bebe_suivi/Page/Patient/Profil.dart';
+import 'package:bebe_suivi/Page/Patient/RendezvousDetail.dart';
+import 'package:bebe_suivi/Page/Patient/VaccinAdd.dart';
+import 'package:bebe_suivi/Page/Patient/grossesse.dart';
 import 'package:bebe_suivi/UserProvider.dart';
 import 'package:bebe_suivi/utils/constants.dart';
 import 'package:flutter/material.dart';
@@ -24,6 +33,6 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: primary),
           useMaterial3: true,
         ),
-        home: const Connexion());
+        home: const Navigation());
   }
 }

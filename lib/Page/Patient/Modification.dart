@@ -17,9 +17,10 @@ class _ModificationState extends State<Modification> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
+    return SafeArea(
+        child: Scaffold(
+      body: Stack(children: [
+        Column(
           children: [
             SizedBox(
               width: MediaQuery.of(context).size.width,
@@ -259,9 +260,21 @@ class _ModificationState extends State<Modification> {
             ),
           ],
         ),
-        // const Center(child: Text("vous n'averz pas de compte"))
-      ),
+        Positioned(
+          top: 16,
+          left: 16,
+          child: IconButton(
+              icon: const Icon(
+                Icons.arrow_back,
+                color: Colors.white,
+                size: 30,
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              }),
+        ),
+      ]),
       bottomNavigationBar: Footer(),
-    );
+    ));
   }
 }
