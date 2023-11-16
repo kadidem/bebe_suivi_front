@@ -1,6 +1,4 @@
 import 'dart:convert';
-import 'dart:html';
-import 'dart:js';
 
 import 'package:bebe_suivi/Modele/MedicamentModel.dart';
 import 'package:bebe_suivi/Page/Patient/Medicament.dart';
@@ -9,6 +7,7 @@ import 'package:http/http.dart' as http;
 
 class MedicamentService {
   Future<http.Response> saveMedicament(
+      BuildContext context,
     String nom,
     // DateTime dateDebut,
     int nombrePrises,

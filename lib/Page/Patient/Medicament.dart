@@ -68,21 +68,21 @@ class Medicament extends StatelessWidget {
                               margin: const EdgeInsets.symmetric(
                                   vertical: 6, horizontal: 2),
                               height: 60,
-                              width: 50,
+                              width: 60,
                               child: Image.asset('assets/image/medicament.png'),
                             ),
-                            const SizedBox(width: 40),
+                            const SizedBox(width: 30),
                             Text(
                               medicament.nom,
                               style: const TextStyle(
                                 color: Colors.black,
-                                fontSize: 20,
+                                fontSize: 18,
                                 fontWeight: FontWeight.bold,
                               ),
                               textAlign: TextAlign.center,
                               softWrap: true,
                             ),
-                            const SizedBox(width: 50),
+                            const SizedBox(width: 30),
                             InkWell(
                               onTap: () {
                                 // Navigator.push(
@@ -95,7 +95,7 @@ class Medicament extends StatelessWidget {
                               },
                               child: Image.asset('assets/image/modifier.png'),
                             ),
-                            const SizedBox(width: 10),
+                            const SizedBox(width: 8),
                             InkWell(
                               onTap: () {
                                 // Ajoutez ici la logique pour la suppression

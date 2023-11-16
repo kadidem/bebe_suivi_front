@@ -65,7 +65,7 @@ class _MedicamentAddState extends State<MedicamentAdd> {
               ),
               SizedBox(
                 // height: 100,
-                width: MediaQuery.of(context).size.width,
+                // width: MediaQuery.of(context).size.width,
                 child: Image.asset('assets/image/medicament1.png'),
               ),
               Form(
@@ -75,7 +75,7 @@ class _MedicamentAddState extends State<MedicamentAdd> {
                   children: [
                     Padding(
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 30, vertical: 15),
+                          horizontal: 10, vertical: 15),
                       child: Container(
                         height: 60,
                         width: 370,
@@ -114,10 +114,10 @@ class _MedicamentAddState extends State<MedicamentAdd> {
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 30, vertical: 15),
+                          horizontal: 20, vertical: 15),
                       child: Container(
-                        width: 370,
-                        height: 60,
+                        width: 350,
+                        height: 70,
                         decoration: BoxDecoration(
                           color: Colors.white,
                           border: Border.all(color: Colors.grey),
@@ -147,9 +147,12 @@ class _MedicamentAddState extends State<MedicamentAdd> {
                               child: Padding(
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 15.0),
-                                child: Text(value != null
-                                    ? value.toString()
-                                    : 'Sélectionner le nombre de prise par jour'),
+                                child: Text(
+                                  value != null
+                                      ? value.toString()
+                                      : 'Sélectionner le nombre de prise ',
+                                  style: TextStyle(color: Colors.grey),
+                                ),
                               ),
                             );
                           }).toList(),
@@ -204,6 +207,7 @@ class _MedicamentAddState extends State<MedicamentAdd> {
                   if (_formKey.currentState!.validate()) {
                     try {
                       await medicamentService.saveMedicament(
+                        context,
                         NomController.text,
                         selectedNombrePrises ?? 0,
                         int.parse(nonbrejourController.text),
@@ -220,7 +224,6 @@ class _MedicamentAddState extends State<MedicamentAdd> {
                         MaterialPageRoute(builder: (context) => Medicament()),
                       );
                     } catch (e) {
-                      // Une exception s'est produite lors de l'ajout, affichez un message d'erreur à l'utilisateur
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
                           content:

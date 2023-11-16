@@ -1,4 +1,5 @@
 import 'package:bebe_suivi/Page/Patient/Bebe.dart';
+import 'package:bebe_suivi/Page/Patient/VaccinListe.dart';
 import 'package:bebe_suivi/Page/header.dart';
 import 'package:bebe_suivi/utils/constants.dart';
 import 'package:bebe_suivi/widgets/custom_button.dart';
@@ -262,17 +263,18 @@ class _VaccinAddState extends State<VaccinAdd> {
                     ),
                   ),
                 ]),
-              )
+              ),
+              CustomButton(
+                text: "Ajouter",
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const VaccinListe()),
+                  );
+                },
+              ),
             ]),
-            CustomButton(
-              text: "Ajouter",
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const Bebe()),
-                );
-              },
-            ),
             Positioned(
               top: 16, // Ajustez ces valeurs selon votre mise en page
               left: 16,

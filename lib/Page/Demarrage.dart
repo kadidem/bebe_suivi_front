@@ -1,6 +1,12 @@
+import 'package:bebe_suivi/Page/Choix.dart';
+import 'package:bebe_suivi/Page/Connexion.dart';
+import 'package:bebe_suivi/Page/Inscription.dart';
 import 'package:bebe_suivi/Page/footer.dart';
 import 'package:bebe_suivi/Page/header.dart';
 // import 'package:bebe_suivi/Page/header.dart';
+import 'package:flutter/material.dart';
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 class Demarrage extends StatefulWidget {
@@ -11,6 +17,20 @@ class Demarrage extends StatefulWidget {
 }
 
 class _DemarrageState extends State<Demarrage> {
+  @override
+  void initState() {
+    super.initState();
+
+    Timer(
+      const Duration(seconds: 7),
+      () => Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (_) => const Choix(),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -22,7 +22,7 @@ class _NavigationState extends State<Navigation> {
 
   final pages = [
     const AcceuilPatient(),
-    const GrossesseListe(),
+    GrossesseListe(),
     const Bebe(),
     Medicament(),
     const Rdv(),

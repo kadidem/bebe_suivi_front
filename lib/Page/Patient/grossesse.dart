@@ -1,12 +1,15 @@
 import 'package:bebe_suivi/Modele/GrossesseModele.dart';
+import 'package:bebe_suivi/Modele/UserModel.dart';
 import 'package:bebe_suivi/Page/Patient/GrossesseAcceuil1.dart';
 import 'package:bebe_suivi/Page/Patient/GrossesseListe.dart';
 import 'package:bebe_suivi/Page/header.dart';
 import 'package:bebe_suivi/Service/GrossesseService.dart';
+import 'package:bebe_suivi/UserProvider.dart';
 import 'package:bebe_suivi/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class Grossesse extends StatefulWidget {
   const Grossesse({Key? key}) : super(key: key);
@@ -20,12 +23,13 @@ class _GrossesseState extends State<Grossesse> {
   final TextEditingController poidsController = TextEditingController();
   final TextEditingController ageController = TextEditingController();
   final GrossesseService grossesseService = GrossesseService();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   Future<void> _selectDate() async {
     DateTime? picked = await showDatePicker(
       context: context,
       initialDate: DateTime.now(),
-      firstDate: DateTime(2020),
-      lastDate: DateTime(2030),
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2060),
     );
     if (picked != null && picked != DateTime.now()) {
       setState(() {
@@ -36,6 +40,8 @@ class _GrossesseState extends State<Grossesse> {
 
   @override
   Widget build(BuildContext context) {
+    final userProvider = Provider.of<UserProvider>(context);
+    UserModel? user = userProvider.user;
     return SafeArea(
       child: Scaffold(
         body: Stack(
@@ -156,16 +162,25 @@ class _GrossesseState extends State<Grossesse> {
                           ),
                           SizedBox(height: 10),
                           CustomButton(
-                            text: "Ajouter",
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        const GrossesseListe()),
-                              );
-                            },
-                          ),
+                              text: "Ajouter",
+                              onTap: () async {
+                                print(dateController.text);
+                                print(DateTime.parse(dateController.text));
+                                GrossesseModel grossesseModel = GrossesseModel(
+                                    dateDernierRegle: dateController.text,
+                                    poids: int.parse(poidsController.text),
+                                    age: int.parse(ageController.text),
+                                    user: user);
+                                if (GrossesseService.createGrossesse(
+                                        grossesseModel) ==
+                                    true) {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => GrossesseListe()),
+                                  );
+                                }
+                              })
                         ],
                       ),
                     ),

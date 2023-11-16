@@ -19,47 +19,46 @@ class _VaccinListeState extends State<VaccinListe> {
           width: MediaQuery.of(context).size.width,
           child: const Header(),
         ),
+
+        Image.asset('/image/polio.png'),
+        // Column(
+        //   children: [
+        Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+            child: Container(
+              height: 60,
+              width: 370,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                border: Border.all(color: Colors.grey),
+                borderRadius: BorderRadius.circular(40.0),
+                boxShadow: const [
+                  BoxShadow(
+                    color: Colors.grey,
+                    offset: Offset(0, 5),
+                    blurRadius: 3.0,
+                  ),
+                ],
+              ),
+              child: const Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [Text('Vaccin'), Text('Date'), Text('status')],
+              ),
+            )),
       ]),
-      Image.asset('assets/image/polio-vaccin 1.pdng'),
-      Column(
-        children: [
-          Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
-              child: Container(
-                height: 60,
-                width: 370,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  border: Border.all(color: Colors.grey),
-                  borderRadius: BorderRadius.circular(40.0),
-                  boxShadow: const [
-                    BoxShadow(
-                      color: Colors.grey,
-                      offset: Offset(0, 5),
-                      blurRadius: 3.0,
-                    ),
-                  ],
-                ),
-                child: const Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [Text('Vaccin'), Text('Date'), Text('status')],
-                ),
-              )),
-        ],
-      ),
-      Positioned(
-        top: 16, // Ajustez ces valeurs selon votre mise en page
-        left: 16,
-        child: IconButton(
-            icon: const Icon(
-              Icons.arrow_back,
-              color: Colors.white,
-              size: 30,
-            ),
-            onPressed: () {
-              Navigator.of(context).pop();
-            }),
-      ),
+      // Positioned(
+      //   top: 16, // Ajustez ces valeurs selon votre mise en page
+      //   left: 16,
+      //   child: IconButton(
+      //       icon: const Icon(
+      //         Icons.arrow_back,
+      //         color: Colors.white,
+      //         size: 30,
+      //       ),
+      //       onPressed: () {
+      //         Navigator.of(context).pop();
+      //       }),
+      // ),
     ])));
   }
 }

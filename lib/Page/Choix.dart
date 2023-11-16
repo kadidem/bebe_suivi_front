@@ -1,3 +1,4 @@
+import 'package:bebe_suivi/Page/Connexion.dart';
 import 'package:bebe_suivi/Page/Inscription.dart';
 import 'package:bebe_suivi/Page/footer.dart';
 import 'package:bebe_suivi/Page/header.dart';
@@ -64,7 +65,7 @@ class _ChoixState extends State<Choix> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => const Inscription()),
+                                  builder: (context) => const Connexion()),
                             );
                           },
                           child: const Center(

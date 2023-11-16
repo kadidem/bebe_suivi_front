@@ -4,6 +4,7 @@ import 'package:bebe_suivi/Modele/UserModel.dart';
 import 'package:bebe_suivi/Page/Demarrage.dart';
 import 'package:bebe_suivi/Page/Inscription.dart';
 import 'package:bebe_suivi/Page/Patient/AcceuilPatient.dart';
+import 'package:bebe_suivi/Page/Patient/Navigation.dart';
 import 'package:bebe_suivi/Service/UserService.dart';
 import 'package:bebe_suivi/UserProvider.dart';
 import 'package:flutter/gestures.dart';
@@ -79,7 +80,7 @@ class _ConnexionState extends State<Connexion> {
                           // Utilisez MultiValidator pour plusieurs validations
                           RequiredValidator(errorText: 'Ce champ est requis'),
                         ]),
-                        cursorColor: Color(0x00f28482),
+                        cursorColor: const Color(0x00f28482),
                         keyboardType: TextInputType.emailAddress,
                         decoration: const InputDecoration(
                           hintText: 'Entrer votre  email',
@@ -119,7 +120,7 @@ class _ConnexionState extends State<Connexion> {
                           RequiredValidator(errorText: 'Ce champ est requis'),
                         ]),
                         obscureText: true,
-                        cursorColor: Color(0x00f28482),
+                        cursorColor: const Color(0x00f28482),
                         keyboardType: TextInputType.visiblePassword,
                         decoration: const InputDecoration(
                           hintText: 'Entrez votre mots de passe',
@@ -162,13 +163,13 @@ class _ConnexionState extends State<Connexion> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => AcceuilPatient()),
+                              builder: (context) => const Navigation()),
                         );
                       } else {
                         // Gérer le cas où loginUser renvoie null
                         print('Erreur de connexion : utilisateur null');
                         ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
+                          const SnackBar(
                             content: Text(
                                 'Erreur de connexion. Veuillez réessayer.'),
                           ),
@@ -178,7 +179,7 @@ class _ConnexionState extends State<Connexion> {
                       // Gérer les erreurs de connexion
                       print('Erreur de connexion : $e');
                       ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
+                        const SnackBar(
                             content: Text(
                                 'Erreur de connexion. Veuillez réessayer.')),
                       );

@@ -1,7 +1,11 @@
 import 'package:bebe_suivi/Page/Connexion.dart';
+import 'package:bebe_suivi/Page/Demarrage.dart';
 import 'package:bebe_suivi/Page/Patient/AddRendezvous.dart';
 import 'package:bebe_suivi/Page/Patient/Bebe.dart';
+import 'package:bebe_suivi/Page/Patient/BebeAcceuil.dart';
 import 'package:bebe_suivi/Page/Patient/BebeAdd.dart';
+import 'package:bebe_suivi/Page/Patient/Docteur.dart';
+import 'package:bebe_suivi/Page/Patient/ForumAdd.dart';
 import 'package:bebe_suivi/Page/Patient/Medicament.dart';
 import 'package:bebe_suivi/Page/Patient/Navigation.dart';
 import 'package:bebe_suivi/Page/Patient/Profil.dart';
@@ -33,6 +37,8 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: primary),
           useMaterial3: true,
         ),
-        home: const Navigation());
+        home: const Docteur()
+        // const Demarrage()
+        );
   }
 }
