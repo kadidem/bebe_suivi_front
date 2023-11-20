@@ -7,6 +7,7 @@ class userService {
   Future<http.Response> saveUser(String nom_prenom, String email,
       String password, String adresse, String numero) async {
     //create uri
+    // var uri = Uri.parse("http://10.0.2.2:8080/user/create");
     var uri = Uri.parse("http://localhost:8080/user/create");
     //header
     Map<String, String> headers = {"Content-Type": "application/json"};
@@ -32,6 +33,7 @@ class userService {
   }
 
   Future<UserModel> loginUser(String email, String password) async {
+    // const apiUrl = 'http://10.0.2.2:8080/user/login';
     const apiUrl = 'http://localhost:8080/user/login';
 
     final response = await http.post(

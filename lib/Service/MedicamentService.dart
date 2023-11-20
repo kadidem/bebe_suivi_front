@@ -7,15 +7,15 @@ import 'package:http/http.dart' as http;
 
 class MedicamentService {
   Future<http.Response> saveMedicament(
-      BuildContext context,
+    BuildContext context,
     String nom,
     // DateTime dateDebut,
     int nombrePrises,
     int nbreDeJour,
   ) async {
     // Créer l'URI
+    // var uri = Uri.parse("http://10.0.2.2:8080/medicament/create");
     var uri = Uri.parse("http://localhost:8080/medicament/create");
-
     // En-têtes
     Map<String, String> headers = {"Content-Type": "application/json"};
 
@@ -52,8 +52,8 @@ class MedicamentService {
   }
 
   Future<List<MedicamentModel>> getAllMedicaments() async {
+    // const String apiUrl = 'http://10.0.2.2:8080/medicament/read';
     const String apiUrl = 'http://localhost:8080/medicament/read';
-
     final response = await http.get(Uri.parse(apiUrl));
 
     if (response.statusCode == 200) {

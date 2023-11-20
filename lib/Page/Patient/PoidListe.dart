@@ -1,16 +1,16 @@
-import 'package:bebe_suivi/Page/Patient/VaccinAdd.dart';
+import 'package:bebe_suivi/Page/Patient/AddPoid.dart';
 import 'package:bebe_suivi/Page/header.dart';
 import 'package:bebe_suivi/utils/constants.dart';
 import 'package:flutter/material.dart';
 
-class VaccinListe extends StatefulWidget {
-  const VaccinListe({super.key});
+class PoidListe extends StatefulWidget {
+  const PoidListe({super.key});
 
   @override
-  State<VaccinListe> createState() => _VaccinListeState();
+  State<PoidListe> createState() => _PoidListeState();
 }
 
-class _VaccinListeState extends State<VaccinListe> {
+class _PoidListeState extends State<PoidListe> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -22,17 +22,17 @@ class _VaccinListeState extends State<VaccinListe> {
           child: const Header(),
         ),
 
-        Image.asset('/image/polio.png'),
+        Image.asset('/image/balance.png'),
         // Column(
         //   children: [
         Padding(
             padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
             child: Container(
               height: 30,
-              width: 370,
+              width: 390,
               decoration: BoxDecoration(
                 color: primary,
-                border: Border.all(color: Colors.grey),
+                // border: Border.all(color: primary),
                 borderRadius: BorderRadius.circular(40.0),
                 boxShadow: const [
                   BoxShadow(
@@ -46,21 +46,28 @@ class _VaccinListeState extends State<VaccinListe> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Text(
-                    'Vaccin',
+                    'Poid',
                     style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
                         fontSize: 14),
                   ),
                   Text(
-                    'Date',
+                    'Taille',
                     style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
                         fontSize: 14),
                   ),
                   Text(
-                    'status',
+                    'Tour de tête',
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 14),
+                  ),
+                  Text(
+                    'Age',
                     style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
@@ -69,28 +76,25 @@ class _VaccinListeState extends State<VaccinListe> {
                 ],
               ),
             )),
-        SizedBox(
-          height: 8,
-        ),
         const Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             Text(
-              'NOM DU VACCIN',
+              'Poid',
               style: TextStyle(
                   // color: Colors.white,
                   fontWeight: FontWeight.bold,
                   fontSize: 14),
             ),
             Text(
-              'La date',
+              'Taille',
               style: TextStyle(
                   // color: Colors.white,
                   fontWeight: FontWeight.bold,
                   fontSize: 14),
             ),
             Text(
-              'le status',
+              'Tour de tête',
               style: TextStyle(
                   // color: Colors.white,
                   fontWeight: FontWeight.bold,
@@ -122,10 +126,10 @@ class _VaccinListeState extends State<VaccinListe> {
               // Utiliser Navigator.push pour naviguer vers la nouvelle page
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const VaccinAdd()),
+                MaterialPageRoute(builder: (context) => const AddPoid()),
               );
             },
-            child: Image.asset("assets/image/seringue.png"))
+            child: Image.asset("assets/image/plus.png"))
       ]),
       Positioned(
         top: 16, // Ajustez ces valeurs selon votre mise en page

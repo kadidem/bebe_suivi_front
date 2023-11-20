@@ -1,3 +1,4 @@
+import 'package:bebe_suivi/Page/Patient/AddRendezvous.dart';
 import 'package:bebe_suivi/Page/header.dart';
 import 'package:bebe_suivi/utils/constants.dart';
 import 'package:flutter/material.dart';
@@ -46,10 +47,19 @@ class _CalendarState extends State<Calendar> {
         ),
       ),
       CalendarCarousel(
+        locale: 'fr_FR',
         onDayPressed: (DateTime date, List<Event> events) {
           setState(() {
             _currentDate = date;
           });
+          // void _showAddAppointmentDialog(DateTime selectedDate) {
+          //   Navigator.push(
+          //     context,
+          //     MaterialPageRoute(
+          //       builder: (context) => AddRendezvous(selectedDate: selectedDate),
+          //     ),
+          //   );
+          // }
         },
         weekendTextStyle: const TextStyle(
           color: primary,
@@ -64,7 +74,7 @@ class _CalendarState extends State<Calendar> {
         todayTextStyle: TextStyle(
           color: primary,
         ),
-        markedDatesMap: _getMarkedDates(),
+        // markedDatesMap: _getMarkedDates(),
         //todayButtonColor: Colors.transparent,
         todayBorderColor: Color.fromARGB(255, 249, 122, 122),
         markedDateMoreShowTotal: true,
@@ -72,31 +82,31 @@ class _CalendarState extends State<Calendar> {
     ]));
   }
 
-  EventList<Event> _getMarkedDates() {
-    EventList<Event> markedDates = EventList<Event>(events: {});
+  // EventList<Event> _getMarkedDates() {
+  //   EventList<Event> markedDates = EventList<Event>(events: {});
 
-    markedDates.add(
-      DateTime.now().add(Duration(days: 2)),
-      Event(
-        date: DateTime.now().add(Duration(days: 2)),
-        icon: Container(color: primary),
-      ),
-    );
-    markedDates.add(
-      DateTime.now().add(Duration(days: 5)),
-      Event(
-        date: DateTime.now().add(Duration(days: 5)),
-        icon: Container(color: primary),
-      ),
-    );
-    markedDates.add(
-      DateTime.now().add(Duration(days: 10)),
-      Event(
-        date: DateTime.now().add(Duration(days: 10)),
-        icon: Container(color: Colors.red),
-      ),
-    );
+  //   markedDates.add(
+  //     DateTime.now().add(Duration(days: 2)),
+  //     Event(
+  //       date: DateTime.now().add(Duration(days: 2)),
+  //       icon: Container(color: primary),
+  //     ),
+  //   );
+  //   markedDates.add(
+  //     DateTime.now().add(Duration(days: 5)),
+  //     Event(
+  //       date: DateTime.now().add(Duration(days: 5)),
+  //       icon: Container(color: primary),
+  //     ),
+  //   );
+  //   markedDates.add(
+  //     DateTime.now().add(Duration(days: 10)),
+  //     Event(
+  //       date: DateTime.now().add(Duration(days: 10)),
+  //       icon: Container(color: Colors.red),
+  //     ),
+  //   );
 
-    return markedDates;
-  }
+  //   return markedDates;
+  // }
 }

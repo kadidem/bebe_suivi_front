@@ -28,6 +28,9 @@ class _ConnexionState extends State<Connexion> {
   TextEditingController passwordController = TextEditingController();
   userService service = userService();
   final _formKey = GlobalKey<FormState>();
+  // final userProvider = Provider.of<UserProvider>(context);
+  // final user = userProvider.user;
+  // String userName = userProvider.user?.nom_prenom ?? "utilisateur";
   bool isConnectionSuccessful = false;
   @override
   Widget build(BuildContext context) {
@@ -160,10 +163,36 @@ class _ConnexionState extends State<Connexion> {
                         Provider.of<UserProvider>(context, listen: false)
                             .setUser(user);
                         // Naviguer vers la page d'accueil
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const Navigation()),
+                        // ignore: use_build_context_synchronously
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: Text('Connexion réussie'),
+                              content: Text('Bienvenue, ${user.nom_prenom}!'),
+                              actions: [
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            const Navigation(),
+                                      ),
+                                    );
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              const Navigation()),
+                                    );
+                                  },
+                                  child: Text('OK'),
+                                ),
+                              ],
+                            );
+                          },
                         );
                       } else {
                         // Gérer le cas où loginUser renvoie null

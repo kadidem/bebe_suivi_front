@@ -12,7 +12,9 @@ import 'package:form_field_validator/form_field_validator.dart';
 import 'package:intl/intl.dart'; // Importez le package
 
 class AddRendezvous extends StatefulWidget {
-  const AddRendezvous({super.key});
+  // const AddRendezvous({super.key});
+  final DateTime selectedDate;
+  const AddRendezvous({Key? key, required this.selectedDate}) : super(key: key);
 
   @override
   State<AddRendezvous> createState() => _AddRendezvousState();
@@ -27,24 +29,26 @@ class _AddRendezvousState extends State<AddRendezvous> {
   List<int?> nombrePrisesOptions = [null, 1, 2, 3, 4, 5];
   int? selectedNombrePrises;
   final MedicamentService medicamentService = MedicamentService();
-  Future<void> _selectDate() async {
-    DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(2020),
-      lastDate: DateTime(2030),
-    );
-    if (picked != null && picked != DateTime.now()) {
-      setState(() {
-        dateController.text = DateFormat('yyyy-MM-dd').format(picked);
-      });
-    }
-  }
+  // Future<void> _selectDate() async {
+  //   DateTime? picked = await showDatePicker(
+  //     context: context,
+  //     initialDate: DateTime.now(),
+  //     firstDate: DateTime(2000),
+  //     lastDate: DateTime(2060),
+  //   );
+  //   if (picked != null && picked != DateTime.now()) {
+  //     setState(() {
+  //       dateController.text = DateFormat('yyyy-MM-dd').format(picked);
+  //     });
+  //   }
+  // }
 
   final _formKey = GlobalKey<FormState>();
   bool isConnectionSuccessful = false;
+
   @override
   Widget build(BuildContext context) {
+    dateController.text = DateFormat('yyyy-MM-dd').format(widget.selectedDate);
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -102,7 +106,7 @@ class _AddRendezvousState extends State<AddRendezvous> {
                               ]),
                               readOnly:
                                   true, // Pour empêcher la saisie directe dans le champ de texte
-                              onTap: _selectDate,
+                              //onTap: _selectDate,
                               cursorColor: Color(0x00f28482),
                               decoration: const InputDecoration(
                                 hintText: 'Entrez la date de rendez vous',
@@ -117,13 +121,15 @@ class _AddRendezvousState extends State<AddRendezvous> {
                               ),
                             ),
                           ),
-                          IconButton(
-                            icon: Icon(Icons.calendar_today),
-                            color: primary,
-                            onPressed: _selectDate,
-                          ),
+                          // IconButton(
+                          //   icon: Icon(Icons.calendar_today),
+                          //   color: primary,
+                          //   onPressed: _selectDate,
+                          // ),
                         ])),
                   ),
+                  // Text(
+                  //     'Date sélectionnée : ${DateFormat('yyyy-MM-dd').format(_selectedDate)}'),
                   Padding(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 30, vertical: 15),

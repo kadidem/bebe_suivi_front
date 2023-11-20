@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:bebe_suivi/Modele/GrossesseModele.dart';
+import 'package:bebe_suivi/Page/GrossesseProvide.dart';
 import 'package:bebe_suivi/Page/Inscription.dart';
 import 'package:bebe_suivi/Page/Patient/grossesse.dart';
 import 'package:bebe_suivi/Page/footer.dart';
@@ -10,6 +11,7 @@ import 'package:bebe_suivi/utils/constants.dart';
 import 'package:bebe_suivi/widgets/custom_button.dart';
 // import 'package:bebe_suivi/Page/header.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class GrossesseListe extends StatefulWidget {
   GrossesseListe({super.key});
@@ -20,26 +22,7 @@ class GrossesseListe extends StatefulWidget {
 
 class _GrossesseListeState extends State<GrossesseListe> {
   final GrossesseService service = GrossesseService();
-  // List<GrossesseModel> listeGrossesses = [];
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   // Appeler la méthode pour récupérer la liste des grossesses au moment de l'initialisation
-  //   chargerGrossesses();
-  // }
-
-  // // Méthode pour charger la liste des grossesses
-  // void chargerGrossesses() async {
-  //   try {
-  //     List<GrossesseModel> grossesses = await GrossesseService.getGrossesse();
-  //     setState(() {
-  //       listeGrossesses = grossesses;
-  //     });
-  //   } catch (e) {
-  //     // Gérer les erreurs, par exemple, afficher un message d'erreur à l'utilisateur
-  //     print('Erreur lors du chargement des grossesses : $e');
-  //   }
-  // }
+  late List<GrossesseModel> listegros;
 
   @override
   Widget build(BuildContext context) {
@@ -67,6 +50,10 @@ class _GrossesseListeState extends State<GrossesseListe> {
             return Text('Erreur: ${snapshot.error}');
           } else {
             List<GrossesseModel> grossesses = snapshot.data!;
+            Provider.of<GrossesseProvider>(context, listen: false)
+                .setListeGrossesses(grossesses);
+            this.listegros = grossesses;
+            print("salut=========  ${jsonEncode(this.listegros)}");
             return Column(
               children: grossesses.map((grossesse) {
                 bool estTerminee = grossesse.dateAcouchement != null &&

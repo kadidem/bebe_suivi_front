@@ -1,3 +1,5 @@
+import 'package:bebe_suivi/Page/Patient/ForumAdd.dart';
+import 'package:bebe_suivi/Page/Patient/Forumdisc.dart';
 import 'package:bebe_suivi/Page/header.dart';
 import 'package:bebe_suivi/utils/constants.dart';
 import 'package:bebe_suivi/widgets/custom_button.dart';
@@ -15,53 +17,73 @@ class _ForumState extends State<Forum> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(
-          title: Text("Forum"),
-        ),
+        // appBar: AppBar(
+        //   title: const Text("Forum"),
+        // ),
         body: Stack(
           children: [
             Column(children: [
               Container(
                 width: MediaQuery.of(context).size.width,
-                child: Header(),
+                child: const Header(),
               ),
               Expanded(
                 child: SizedBox(
                   width: MediaQuery.of(context).size.width * 0.7,
                   child: Expanded(
                     child: Column(children: [
-                      Align(
-                        alignment: Alignment.centerRight,
-                        child: Container(
-                          //width: MediaQuery.of(context).size.width * 0.7,
-                          decoration: BoxDecoration(
-                              color: primary,
-                              borderRadius: BorderRadius.circular(10)),
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              "Commencez une discussion",
-                              style: TextStyle(color: Colors.white),
+                      GestureDetector(
+                        onTap: () {
+                          // Utiliser Navigator.push pour naviguer vers la nouvelle page
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const ForumAdd()),
+                          );
+                        },
+                        child: Align(
+                          alignment: Alignment.centerRight,
+                          child: Container(
+                            //width: MediaQuery.of(context).size.width * 0.7,
+                            decoration: BoxDecoration(
+                                color: primary,
+                                borderRadius: BorderRadius.circular(10)),
+                            child: const Padding(
+                              padding: EdgeInsets.all(8.0),
+                              child: Text(
+                                "Commencez une discussion",
+                                style: TextStyle(color: Colors.white),
+                              ),
                             ),
                           ),
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       Container(
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                             border: Border(
                           top: BorderSide(width: 5, color: primary),
                           // bottom: BorderSide(width: 1, color: primary),
                         )),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          // Utiliser Navigator.push pour naviguer vers la nouvelle page
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const Forumdisc()),
+                          );
+                        },
                         child: Column(
                           children: [
                             for (var i = 0; i < 5; i++)
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Container(
-                                  decoration: BoxDecoration(
+                                  decoration: const BoxDecoration(
                                       border: Border(
                                           bottom: BorderSide(
                                               width: 5, color: primary))),
@@ -76,7 +98,7 @@ class _ForumState extends State<Forum> {
                                               color: primary,
                                               borderRadius:
                                                   BorderRadius.circular(20)),
-                                          child: Text(
+                                          child: const Text(
                                             "K",
                                             style: TextStyle(
                                                 fontSize: 20,
@@ -85,9 +107,9 @@ class _ForumState extends State<Forum> {
                                             textAlign: TextAlign.center,
                                           ),
                                         ),
-                                        Expanded(
+                                        const Expanded(
                                           child: Padding(
-                                            padding: const EdgeInsets.only(
+                                            padding: EdgeInsets.only(
                                                 left: 10, right: 10),
                                             child: Column(
                                               crossAxisAlignment:
@@ -111,7 +133,7 @@ class _ForumState extends State<Forum> {
                                             ),
                                           ),
                                         ),
-                                        SizedBox(
+                                        const SizedBox(
                                           height: 60,
                                           child: Align(
                                             alignment: Alignment.bottomCenter,
