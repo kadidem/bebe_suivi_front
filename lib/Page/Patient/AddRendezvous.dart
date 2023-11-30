@@ -25,30 +25,18 @@ class _AddRendezvousState extends State<AddRendezvous> {
   TextEditingController nonbrefoisController = TextEditingController();
   TextEditingController dateController = TextEditingController();
   TextEditingController nonbrejourController = TextEditingController();
-  TextEditingController intialdateval = TextEditingController();
+  // TextEditingController intialdateval = TextEditingController();
+  TextEditingController timeController = TextEditingController();
   List<int?> nombrePrisesOptions = [null, 1, 2, 3, 4, 5];
   int? selectedNombrePrises;
   final MedicamentService medicamentService = MedicamentService();
-  // Future<void> _selectDate() async {
-  //   DateTime? picked = await showDatePicker(
-  //     context: context,
-  //     initialDate: DateTime.now(),
-  //     firstDate: DateTime(2000),
-  //     lastDate: DateTime(2060),
-  //   );
-  //   if (picked != null && picked != DateTime.now()) {
-  //     setState(() {
-  //       dateController.text = DateFormat('yyyy-MM-dd').format(picked);
-  //     });
-  //   }
-  // }
 
   final _formKey = GlobalKey<FormState>();
-  bool isConnectionSuccessful = false;
 
   @override
   Widget build(BuildContext context) {
     dateController.text = DateFormat('yyyy-MM-dd').format(widget.selectedDate);
+    timeController.text = DateFormat('HH:mm').format(widget.selectedDate);
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -128,6 +116,7 @@ class _AddRendezvousState extends State<AddRendezvous> {
                           // ),
                         ])),
                   ),
+
                   // Text(
                   //     'Date sélectionnée : ${DateFormat('yyyy-MM-dd').format(_selectedDate)}'),
                   Padding(

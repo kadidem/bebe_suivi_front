@@ -7,6 +7,7 @@ import 'package:bebe_suivi/Page/Patient/AcceuilPatient.dart';
 import 'package:bebe_suivi/Page/Patient/Navigation.dart';
 import 'package:bebe_suivi/Service/UserService.dart';
 import 'package:bebe_suivi/UserProvider.dart';
+import 'package:bebe_suivi/utils/constants.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -248,7 +249,7 @@ class _ConnexionState extends State<Connexion> {
                           },
                         text: 'Inscrivez vous',
                         style: const TextStyle(
-                          color: Colors.blue,
+                          color: primary,
                           fontSize: 16.0,
                           fontWeight: FontWeight.bold,
                         ),

@@ -1,33 +1,52 @@
+import 'package:bebe_suivi/Modele/UserModel.dart';
+
 class MedicamentModel {
+  int? idMedicament;
   String nom;
   int? nombrePrises;
-  //DateTime dateDebut;
-  int? nbreDeJour; // ou nbreDeJour, assurez-vous d'adapter selon votre modèle
+  String dateDebut;
+  int? nbreDeJour;
+  String? dateFin;
+  final UserModel? user;
 
-  // Constructeur de la classe
   MedicamentModel({
     required this.nom,
     required this.nombrePrises,
     required this.nbreDeJour,
+    required this.dateDebut,
+    this.idMedicament,
+    this.dateFin,
+    required this.user,
   });
 
-  // Méthode pour convertir l'objet en JSON
   Map<String, dynamic> toJson() {
     return {
       'nom': nom,
-      'nombrePrises': nombrePrises,
-      //'dateDebut': dateDebut.toIso8601String(),
+      'nombreDeFoisParJour':
+          nombrePrises, // Removed the extra double quote here
+      'dateDebut': dateDebut,
       'nbreDeJour': nbreDeJour,
+      'idMedicament': idMedicament,
+      'dateFin': dateFin,
+      "user": {
+        "idUser": user?.idUser,
+        // "nom_prenom": user.nom_prenom,
+        // "email": user.email,
+        // "motDePasse": "1234567",
+        // "numero": 74746643,
+        // "adresse": "Lafiabougou"
+      }
     };
   }
 
   factory MedicamentModel.fromJson(Map<String, dynamic> json) {
     return MedicamentModel(
-      // Initialiser les propriétés du médicament à partir du JSON
       nom: json['nom'],
-      nombrePrises: json['nombrePrises'],
+      nombrePrises: json['nombreDeFoisParJour'],
       nbreDeJour: json['nbreDeJour'],
-      // Ajouter d'autres propriétés si nécessaire
+      dateDebut: json['dateDebut'],
+      idMedicament: json['idMedicament'],
+      user: UserModel.fromJson(json['user']),
     );
   }
 }

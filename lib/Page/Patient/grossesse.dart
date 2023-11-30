@@ -24,18 +24,115 @@ class _GrossesseState extends State<Grossesse> {
   final TextEditingController ageController = TextEditingController();
   final GrossesseService grossesseService = GrossesseService();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  DateTime _selectedDate = DateTime.now();
   Future<void> _selectDate() async {
-    DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(2000),
-      lastDate: DateTime(2060),
-    );
-    if (picked != null && picked != DateTime.now()) {
-      setState(() {
-        dateController.text = DateFormat('yyyy-MM-dd').format(picked);
-      });
+    _selectedDate = await showDatePicker(
+          context: context,
+          initialDate: _selectedDate,
+          firstDate: DateTime(2000),
+          lastDate: DateTime(2060),
+        ) ??
+        _selectedDate;
+    setState(() {
+      dateController.text = DateFormat('yyyy-MM-dd').format(_selectedDate);
+    });
+  }
+
+  // String? poidValidator(String? value) {
+  //   if (value == null || value.isEmpty) {
+  //     return "Champ requis !";
+  //   }
+
+  //   int poids = int.tryParse(value) ?? 0;
+  //   if (poids < 40 || poids > 150) {
+  //     return "Poids incorrecte";
+  //   }
+
+  //   return null;
+  // }
+
+  String? poidControllerValidator(String? value) {
+    if (value == null || value.isEmpty) {
+      return "Le poid est requis !";
     }
+
+    int poids = int.tryParse(value) ?? 0;
+    if (poids < 40 || poids > 150) {
+      return "Le poids est incorrecte";
+    }
+    return null;
+  }
+
+  String? ageControllerValidator(String? value) {
+    if (value == null || value.isEmpty) {
+      return "L'age  est requis !";
+    }
+
+    int age = int.tryParse(value) ?? 0;
+    if (age < 16 || age > 50) {
+      return "L'age  est incorrecte";
+    }
+    return null;
+  }
+
+  // String? dateControllerValidator(String? value) {
+  //   if (value == null || value.isEmpty) {
+  //     return "La date  est requis !";
+  //   }
+  //   return null;
+  // }
+
+  bool validateForm() {
+    String? poidsValide = poidControllerValidator(poidsController.text);
+    if (poidsValide != null) {
+      showMessage(poidsValide);
+      return false;
+    }
+    String? ageValide = ageControllerValidator(ageController.text);
+    if (ageValide != null) {
+      showMessage(ageValide);
+      return false;
+    }
+
+    // String? dateValide = dateControllerValidator(dateController.text);
+    // if (dateValide != null) {
+    //   showMessage(dateValide);
+    //   return false;
+    // }
+    return true;
+  }
+
+  Future<void> showMessage(String error) async {
+    await showDialog(
+        context: context,
+        builder: (_) => AlertDialog(
+              icon: const Icon(
+                Icons.warning,
+                size: 100,
+              ),
+              title: Text(error),
+              actions: [
+                ElevatedButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: const Text("Ok"))
+              ],
+            ));
+  }
+
+  @override
+  void initState() {
+    dateController.text = "Selectionner une date";
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    dateController.dispose();
+    ageController.dispose();
+    poidsController.dispose();
+    super.dispose();
   }
 
   @override
@@ -46,148 +143,6 @@ class _GrossesseState extends State<Grossesse> {
       child: Scaffold(
         body: Stack(
           children: [
-            Column(
-              children: [
-                Container(
-                  width: MediaQuery.of(context).size.width,
-                  child: Header(),
-                ),
-                Expanded(
-                  child: SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.7,
-                    child: Expanded(
-                      child: Column(
-                        children: [
-                          const Text("Ajouter grossesse"),
-                          SizedBox(height: 10),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Image.asset(
-                                "assets/image/foetus.png",
-                                width: 90,
-                              ),
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 30,
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 30,
-                              vertical: 15,
-                            ),
-                            child: Container(
-                              height: 50,
-                              width: 370,
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                border: Border.all(color: Colors.grey),
-                                //borderRadius: BorderRadius.circular(40.0),
-                                boxShadow: const [
-                                  BoxShadow(
-                                    color: Colors.grey,
-                                    offset: Offset(0, 5),
-                                    blurRadius: 3.0,
-                                  ),
-                                ],
-                              ),
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                    child: TextFormField(
-                                      controller: dateController,
-                                      validator: MultiValidator([
-                                        RequiredValidator(
-                                            errorText: 'Ce champ est requis'),
-                                      ]),
-                                      readOnly:
-                                          true, // Pour empêcher la saisie directe dans le champ de texte
-                                      onTap: _selectDate,
-                                      cursorColor: Color(0x00f28482),
-                                      decoration: const InputDecoration(
-                                        hintText:
-                                            'Entrez la date du 1er jour des dernières règles',
-                                        contentPadding: EdgeInsets.symmetric(
-                                            horizontal: 15.0),
-                                        enabledBorder: UnderlineInputBorder(
-                                          borderSide: BorderSide(
-                                              color: Colors.transparent),
-                                        ),
-                                        focusedBorder: UnderlineInputBorder(
-                                          borderSide: BorderSide(
-                                              color: Colors.transparent),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  IconButton(
-                                    icon: Icon(Icons.calendar_today),
-                                    onPressed: _selectDate,
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          SizedBox(height: 10),
-                          Material(
-                            elevation: 20,
-                            borderRadius: BorderRadius.circular(20),
-                            child: TextField(
-                              controller: poidsController,
-                              decoration: InputDecoration(
-                                hintText: "Saisissez votre poids actuel",
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(20),
-                                  borderSide: BorderSide(color: Colors.grey),
-                                ),
-                              ),
-                            ),
-                          ),
-                          SizedBox(height: 10),
-                          Material(
-                            elevation: 20,
-                            borderRadius: BorderRadius.circular(20),
-                            child: TextField(
-                              controller: ageController,
-                              decoration: InputDecoration(
-                                hintText: "Saisissez votre âge",
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(20),
-                                  borderSide: BorderSide(color: Colors.grey),
-                                ),
-                              ),
-                            ),
-                          ),
-                          SizedBox(height: 10),
-                          CustomButton(
-                              text: "Ajouter",
-                              onTap: () async {
-                                print(dateController.text);
-                                print(DateTime.parse(dateController.text));
-                                GrossesseModel grossesseModel = GrossesseModel(
-                                    dateDernierRegle: dateController.text,
-                                    poids: int.parse(poidsController.text),
-                                    age: int.parse(ageController.text),
-                                    user: user);
-                                if (GrossesseService.createGrossesse(
-                                        grossesseModel) ==
-                                    true) {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => GrossesseListe()),
-                                  );
-                                }
-                              })
-                        ],
-                      ),
-                    ),
-                  ),
-                )
-              ],
-            ),
             Positioned(
               top: 200,
               right: 0,
@@ -209,11 +164,165 @@ class _GrossesseState extends State<Grossesse> {
                 width: 90,
               ),
             ),
+            SingleChildScrollView(
+              child: Column(
+                children: [
+                  Container(
+                    width: MediaQuery.of(context).size.width,
+                    child: const Header(),
+                  ),
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.7,
+                    child: Expanded(
+                      child: Form(
+                        key: _formKey,
+                        child: Column(
+                          children: [
+                            const Text(
+                              "Ajouter grossesse",
+                              style: TextStyle(
+                                  fontSize: 25, fontWeight: FontWeight.bold),
+                            ),
+                            const SizedBox(height: 10),
+                            SizedBox(
+                              height: 100,
+                              child: Center(
+                                child: Image.asset(
+                                  "assets/image/foetus.png",
+                                ),
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 30,
+                            ),
+                            Container(
+                              margin: const EdgeInsets.symmetric(
+                                horizontal: 30,
+                                vertical: 15,
+                              ),
+                              padding: const EdgeInsets.only(left: 5),
+                              height: 50,
+                              width: 370,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                border: Border.all(color: Colors.grey),
+                                //borderRadius: BorderRadius.circular(40.0),
+                                boxShadow: const [
+                                  BoxShadow(
+                                    color: Colors.grey,
+                                    offset: Offset(0, 5),
+                                    blurRadius: 3.0,
+                                  ),
+                                ],
+                              ),
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                      child: InkWell(
+                                          onTap: _selectDate,
+                                          child: Text(
+                                            dateController.text,
+                                            textAlign: TextAlign.center,
+                                          ))),
+                                  IconButton(
+                                    icon: const Icon(Icons.calendar_today),
+                                    onPressed: _selectDate,
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(height: 10),
+                            Container(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 5),
+                              width: 300,
+                              height: 50,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                border: Border.all(color: Colors.grey),
+                                borderRadius: BorderRadius.circular(20),
+                                boxShadow: const [
+                                  BoxShadow(
+                                    color: Colors.grey,
+                                    offset: Offset(0, 5),
+                                    blurRadius: 3.0,
+                                  ),
+                                ],
+                              ),
+                              child: TextFormField(
+                                controller: poidsController,
+                                decoration: const InputDecoration(
+                                    border: InputBorder.none,
+                                    hintText: "Saisissez votre poids actuel"),
+                                //validator: poidValidator,
+                              ),
+                            ),
+                            const SizedBox(height: 30),
+                            Container(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 5),
+                              width: 300,
+                              height: 50,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                border: Border.all(color: Colors.grey),
+                                borderRadius: BorderRadius.circular(20),
+                                boxShadow: const [
+                                  BoxShadow(
+                                    color: Colors.grey,
+                                    offset: Offset(0, 5),
+                                    blurRadius: 3.0,
+                                  ),
+                                ],
+                              ),
+                              child: TextFormField(
+                                controller: ageController,
+                                decoration: const InputDecoration(
+                                  border: InputBorder.none,
+                                  hintText: "Saisissez votre âge",
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: 30),
+                            CustomButton(
+                              text: "Ajouter",
+                              onTap: () async {
+                                if (validateForm()) {
+                                  print(dateController.text);
+                                  print(DateTime.parse(dateController.text));
+                                  GrossesseModel grossesseModel =
+                                      GrossesseModel(
+                                          dateDernierRegle: dateController.text,
+                                          poids:
+                                              int.parse(poidsController.text),
+                                          age: int.parse(ageController.text),
+                                          user: user);
+                                  if (GrossesseService.createGrossesse(
+                                          grossesseModel) ==
+                                      true) {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              GrossesseListe()),
+                                    );
+                                  }
+                                }
+                              },
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
             Positioned(
               top: 16, // Ajustez ces valeurs selon votre mise en page
               left: 16,
               child: IconButton(
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.arrow_back,
                     color: Colors.white,
                     size: 30,

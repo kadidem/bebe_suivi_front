@@ -1,15 +1,36 @@
 import 'package:bebe_suivi/Modele/MedicamentModel.dart';
 import 'package:bebe_suivi/Page/Patient/MedicamentAdd.dart';
-import 'package:bebe_suivi/Page/Patient/grossesse.dart';
+import 'package:bebe_suivi/Page/Patient/MedicamentEdit.dart';
+import 'package:bebe_suivi/Page/Patient/MedicamentProvider.dart';
+//import 'package:bebe_suivi/Page/Patient/grossesse.dart';
 import 'package:bebe_suivi/Page/header.dart';
 import 'package:bebe_suivi/Service/MedicamentService.dart';
+import 'package:bebe_suivi/UserProvider.dart';
 import 'package:bebe_suivi/utils/constants.dart';
-import 'package:flutter/gestures.dart';
+//import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class Medicament extends StatelessWidget {
+class Medicament extends StatefulWidget {
   Medicament({super.key});
+
+  @override
+  State<Medicament> createState() => _MedicamentState();
+}
+
+class _MedicamentState extends State<Medicament> {
   final MedicamentService service = MedicamentService();
+
+  Future<List<MedicamentModel>> listMedicament = Future.value([]);
+
+  @override
+  void initState() {
+    listMedicament = service.getAllMedicamentByIdUser(
+      Provider.of<UserProvider>(context, listen: false).user?.idUser ?? 0,
+    );
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -28,23 +49,27 @@ class Medicament extends StatelessWidget {
                     // Utiliser Navigator.push pour naviguer vers la nouvelle page
                     Navigator.push(
                       context,
-                      MaterialPageRoute(
-                          builder: (context) => const MedicamentAdd()),
+                      MaterialPageRoute(builder: (context) => MedicamentAdd()),
                     );
                   },
                   child: Image.asset("assets/image/plus.png"))),
           FutureBuilder<List<MedicamentModel>>(
-            future: service.getAllMedicaments(),
+            future: listMedicament,
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const CircularProgressIndicator();
               } else if (snapshot.hasError) {
                 return Text('Erreur: ${snapshot.error}');
               } else {
-                // Affichez la liste des médicaments
                 List<MedicamentModel> medicaments = snapshot.data!;
+
+                Provider.of<MedicamentProvider>(context, listen: false)
+                    .listeMedicament = medicaments;
+
                 return Column(
                   children: medicaments.map((medicament) {
+                    print(medicament.nbreDeJour);
+                    print(medicament.nombrePrises);
                     return Container(
                       margin: const EdgeInsets.symmetric(
                           vertical: 10, horizontal: 6),
@@ -87,13 +112,13 @@ class Medicament extends StatelessWidget {
                               const SizedBox(width: 30),
                               InkWell(
                                 onTap: () {
-                                  // Navigator.push(
-                                  //   // context,
-                                  //   // MaterialPageRoute(
-                                  //   //   builder: (context) =>
-                                  //   //       MedicamentForm(medicament: medicament),
-                                  //   // ),
-                                  // );
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => MedicamentEdit(
+                                          medicament: medicament),
+                                    ),
+                                  );
                                 },
                                 child: Image.asset('assets/image/modifier.png'),
                               ),
@@ -216,7 +241,7 @@ class Medicament extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(10.0),
                                 ),
                                 child: Text(
-                                  ' ${medicament.nbreDeJour} FOIS PAR JOURS',
+                                  ' ${medicament.nombrePrises} FOIS PAR JOURS',
                                   // Vous devez obtenir cette information du modèle MedicamentModel
                                   style: const TextStyle(
                                     color: Colors.white,
@@ -238,7 +263,7 @@ class Medicament extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(10.0),
                                 ),
                                 child: Text(
-                                  'PENDANT ${medicament.nombrePrises} JOURS',
+                                  'PENDANT ${medicament.nbreDeJour} JOURS',
                                   // Vous devez obtenir cette information du modèle MedicamentModel
                                   style: const TextStyle(
                                     color: Colors.white,

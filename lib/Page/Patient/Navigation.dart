@@ -1,232 +1,96 @@
+// import 'package:flutter/material.dart';
 import 'package:bebe_suivi/Page/Patient/AcceuilPatient.dart';
 import 'package:bebe_suivi/Page/Patient/Bebe.dart';
-import 'package:bebe_suivi/Page/Patient/Docteur.dart';
+import 'package:bebe_suivi/Page/Patient/Calendar.dart';
 import 'package:bebe_suivi/Page/Patient/Forum.dart';
 import 'package:bebe_suivi/Page/Patient/GrossesseListe.dart';
 import 'package:bebe_suivi/Page/Patient/Medicament.dart';
-import 'package:bebe_suivi/Page/Patient/Rdv.dart';
-import 'package:bebe_suivi/Page/Patient/Grossesse.dart';
-import 'package:bebe_suivi/utils/constants.dart';
 import 'package:flutter/material.dart';
+//import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
+import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
 class Navigation extends StatefulWidget {
-  const Navigation({super.key});
+  const Navigation({Key? key}) : super(key: key);
 
   @override
   State<Navigation> createState() => _NavigationState();
 }
 
 class _NavigationState extends State<Navigation> {
-  //const Navigation({super.key});
   int pageIndex = 0;
+  PersistentTabController _controller =
+      PersistentTabController(initialIndex: 0);
 
-  final pages = [
-    const AcceuilPatient(),
-    GrossesseListe(),
-    const Bebe(),
-    Medicament(),
-    const Rdv(),
-    const Docteur(),
-    const Forum(),
-  ];
+  List<Widget> _buildScreens() {
+    return [
+      const AcceuilPatient(),
+      GrossesseListe(),
+      const Bebe(),
+      Medicament(),
+      const Calendar(),
+      const Forum(),
+    ];
+  }
+
+  List<PersistentBottomNavBarItem> _navBarsItems() {
+    return [
+      PersistentBottomNavBarItem(
+        icon: const Icon(Icons.home),
+        title: "Acceuil",
+        activeColorPrimary: Colors.blue,
+        inactiveColorPrimary: Colors.grey,
+      ),
+      PersistentBottomNavBarItem(
+        icon: const Icon(Icons.pregnant_woman),
+        title: "Grossesse",
+        activeColorPrimary: Colors.blue,
+        inactiveColorPrimary: Colors.grey,
+      ),
+      PersistentBottomNavBarItem(
+        icon: const Icon(Icons.child_care),
+        title: "Bébé",
+        activeColorPrimary: Colors.blue,
+        inactiveColorPrimary: Colors.grey,
+      ),
+      PersistentBottomNavBarItem(
+        icon: const Icon(Icons.medical_services),
+        title: "Medicament",
+        activeColorPrimary: Colors.blue,
+        inactiveColorPrimary: Colors.grey,
+      ),
+      PersistentBottomNavBarItem(
+        icon: const Icon(Icons.calendar_today),
+        title: "Calendar",
+        activeColorPrimary: Colors.blue,
+        inactiveColorPrimary: Colors.grey,
+      ),
+      PersistentBottomNavBarItem(
+        icon: const Icon(Icons.forum),
+        title: "Forum",
+        activeColorPrimary: Colors.blue,
+        inactiveColorPrimary: Colors.grey,
+      ),
+    ];
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: pages[pageIndex],
-      bottomNavigationBar: Container(
-        height: 80,
-        decoration: const BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(20),
-            topRight: Radius.circular(20),
-          ),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            IconButton(
-              enableFeedback: false,
-              onPressed: () {
-                setState(() {
-                  pageIndex = 0;
-                });
-              },
-              icon: Column(
-                children: [
-                  pageIndex == 0
-                      ? Image.asset(
-                          'assets/image/home.png',
-                          width: 35,
-                          height: 35,
-                        )
-                      : Image.asset(
-                          'assets/image/home.png',
-                          width: 35,
-                          height: 35,
-                        ),
-                  const Text("Acceuil")
-                ],
-              ),
-            ),
-            IconButton(
-              enableFeedback: false,
-              onPressed: () {
-                setState(() {
-                  pageIndex = 1;
-                });
-              },
-              icon: Column(
-                children: [
-                  pageIndex == 1
-                      ? Image.asset(
-                          'assets/image/bebe.png',
-                          width: 35,
-                          height: 35,
-                        )
-                      : Image.asset(
-                          'assets/image/bebe.png',
-                          width: 35,
-                          height: 35,
-                        ),
-                  const Text("Grossesse")
-                ],
-              ),
-            ),
-            IconButton(
-              enableFeedback: false,
-              onPressed: () {
-                setState(() {
-                  pageIndex = 2;
-                });
-              },
-              icon: Column(
-                children: [
-                  pageIndex == 2
-                      ? Image.asset(
-                          'assets/image/logo.png', // Remplacez 'assets/home_filled.png' par le chemin de votre image
-                          //color: Colors.white,
-                          width: 35,
-                          height: 35,
-                        )
-                      : Image.asset(
-                          'assets/image/logo.png', // Remplacez 'assets/home_outlined.png' par le chemin de votre image
-                          //  color: Colors.white,
-                          width: 35,
-                          height: 35,
-                        ),
-                  const Text("Bébé")
-                ],
-              ),
-            ),
-            IconButton(
-              enableFeedback: false,
-              onPressed: () {
-                setState(() {
-                  pageIndex = 3;
-                });
-              },
-              icon: Column(
-                children: [
-                  pageIndex == 3
-                      ? Image.asset(
-                          'assets/image/medicament.png', // Remplacez 'assets/home_filled.png' par le chemin de votre image
-                          // color: Colors.white,
-                          width: 35,
-                          height: 35,
-                        )
-                      : Image.asset(
-                          'assets/image/medicament.png', // Remplacez 'assets/home_outlined.png' par le chemin de votre image
-                          //color: Colors.white,
-                          width: 35,
-                          height: 35,
-                        ),
-                  const Text("Medicament")
-                ],
-              ),
-            ),
-            //= IconButton(
-            //   enableFeedback: false,
-            //   onPressed: () {
-            //     setState(() {
-            //       pageIndex = 4;
-            //     });
-            //   },
-            //   icon: Column(
-            //     children: [
-            //       pageIndex == 5
-            //           ? Image.asset(
-            //               'assets/image/docteur.png', // Remplacez 'assets/home_filled.png' par le chemin de votre image
-            //               // color: Colors.white,
-            //               width: 35,
-            //               height: 35,
-            //             )
-            //           : Image.asset(
-            //               'assets/image/docteur.png', // Remplacez 'assets/home_outlined.png' par le chemin de votre image
-            //               //color: Colors.white,
-            //               width: 35,
-            //               height: 35,
-            //             ),
-            //       const Text("Docteur")
-            //     ],
-            //   ),
-            // ),
-            IconButton(
-              enableFeedback: false,
-              onPressed: () {
-                setState(() {
-                  pageIndex = 5;
-                });
-              },
-              icon: Column(
-                children: [
-                  pageIndex == 5
-                      ? Image.asset(
-                          'assets/image/rdv.png', // Remplacez 'assets/home_filled.png' par le chemin de votre image
-                          // color: Colors.white,
-                          width: 35,
-                          height: 35,
-                        )
-                      : Image.asset(
-                          'assets/image/rdv.png', // Remplacez 'assets/home_outlined.png' par le chemin de votre image
-                          //color: Colors.white,
-                          width: 35,
-                          height: 35,
-                        ),
-                  const Text("RDV")
-                ],
-              ),
-            ),
-            IconButton(
-              enableFeedback: false,
-              onPressed: () {
-                setState(() {
-                  pageIndex = 6;
-                });
-              },
-              icon: Column(
-                children: [
-                  pageIndex == 6
-                      ? Image.asset(
-                          'assets/image/forum.png', // Remplacez 'assets/home_filled.png' par le chemin de votre image
-                          // color: Colors.white,
-                          width: 35,
-                          height: 35,
-                        )
-                      : Image.asset(
-                          'assets/image/forum.png', // Remplacez 'assets/home_outlined.png' par le chemin de votre image
-                          //color: Colors.white,
-                          width: 35,
-                          height: 35,
-                        ),
-                  const Text("Forum")
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
+    return PersistentTabView(
+      context,
+      navBarHeight: 80,
+      controller: _controller,
+      screens: _buildScreens(),
+      items: _navBarsItems(),
+      confineInSafeArea: true,
+      backgroundColor: Colors.white,
+      handleAndroidBackButtonPress: true,
+      onItemSelected: (index) {
+        setState(() {
+          pageIndex = index;
+        });
+      },
+      //itemCount: 6,
+      navBarStyle: NavBarStyle.style12,
     );
   }
 }

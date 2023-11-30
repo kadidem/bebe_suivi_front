@@ -1,5 +1,5 @@
 import 'package:bebe_suivi/Admin/Acceuilpage.dart';
-import 'package:bebe_suivi/Admin/Connexion.dart';
+import 'package:bebe_suivi/Admin/ConnexionAdmin.dart';
 import 'package:bebe_suivi/Page/Connexion.dart';
 import 'package:bebe_suivi/utils/constants.dart';
 import 'package:flutter/material.dart';
@@ -22,13 +22,17 @@ class HeaderAdmin extends StatelessWidget {
               width: 200,
               child: ElevatedButton(
                   onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const ConnexionAdmin()));
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => Acceuilpage()));
                   },
-                  child: Text("Accueil"))),
-          SizedBox(
+                  child: const Text(
+                    "Accueil",
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold),
+                  ))),
+          const SizedBox(
             width: 50,
           ),
           SizedBox(
@@ -38,10 +42,16 @@ class HeaderAdmin extends StatelessWidget {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const Acceuilpage()));
+                            builder: (context) => ConnexionAdmin()));
                   },
-                  child: Text("Deconnexion"))),
-          SizedBox(
+                  child: const Text(
+                    "Deconnexion",
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold),
+                  ))),
+          const SizedBox(
             width: 50,
           ),
         ],

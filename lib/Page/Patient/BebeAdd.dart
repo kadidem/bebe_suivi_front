@@ -27,9 +27,9 @@ class _BebeAddState extends State<BebeAdd> {
   TextEditingController dateController = TextEditingController();
   TextEditingController nonbrejourController = TextEditingController();
   TextEditingController intialdateval = TextEditingController();
-  List<String?> nombrePrisesOptions = [null, 'Fille', 'Garcon'];
+  List<String?> nombrePrisesOptions = [null, 'F', 'M'];
   String? selectedNombrePrises;
-  String? selectedGrossesse;
+  GrossesseModel? selectedGrossesse;
 
   final BebeService bebeService = BebeService();
   final _formKey = GlobalKey<FormState>();
@@ -42,7 +42,8 @@ class _BebeAddState extends State<BebeAdd> {
     );
     if (picked != null && picked != DateTime.now()) {
       setState(() {
-        dateController.text = DateFormat('yyyy-MM-dd').format(picked);
+        dateController.text =
+            DateFormat('yyyy-MM-dd').format(picked).split(" ")[0];
       });
     }
   }
@@ -180,17 +181,17 @@ class _BebeAddState extends State<BebeAdd> {
                         ),
                       ),
                     ),
-                    DropdownButtonFormField<String>(
+                    DropdownButtonFormField<GrossesseModel>(
                       value: selectedGrossesse,
-                      onChanged: (String? newValue) {
+                      onChanged: (GrossesseModel? newValue) {
                         setState(() {
                           selectedGrossesse = newValue;
                         });
                       },
                       items: grossesses.map((GrossesseModel grossesse) {
-                        return DropdownMenuItem<String>(
-                          value: grossesse.dateDernierRegle,
-                          child: Text(grossesse.dateDernierRegle),
+                        return DropdownMenuItem<GrossesseModel>(
+                          value: grossesse,
+                          child: Text(grossesse.idGrossesse.toString()),
                         );
                       }).toList(),
                       decoration: const InputDecoration(
@@ -245,25 +246,56 @@ class _BebeAddState extends State<BebeAdd> {
                   ]),
                 ),
                 CustomButton(
-                  text: "Ajouter",
-                  onTap: () {
-                    // if (_formKey.currentState?.validate() ?? false) {
-                    //   BebeMoedel bebe = BebeMoedel(
-                    //     nomPrenom: emailController.text,
-                    //     dateNaissance: dateController.text,
-                    //     sexe: selectedNombrePrises ?? '',
-                    //     // grossesse: null,
-                    //   );
+                    text: "Ajouter",
+                    onTap: () async {
+                      if (_formKey.currentState?.validate() ?? false) {
+                        BebeModel bebe = BebeModel(
+                          nomPrenom: emailController.text,
+                          dateNaissance: DateTime.parse(dateController.text),
+                          sexe: selectedNombrePrises ?? '',
+                          grossesse: selectedGrossesse,
+                        );
 
-                    //   bebeService.createBebe(bebe);
-
-                    //   Navigator.push(
-                    //     context,
-                    //     MaterialPageRoute(builder: (context) => const Bebe()),
-                    //   );
-                    // }
-                  },
-                )
+                        var response = await bebeService.createBebe(bebe);
+                        if (response == true) {
+                          // ignore: use_build_context_synchronously
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: const Text('Inscription réussie!'),
+                                content:
+                                    const Text('Vous êtes maintenant inscrit.'),
+                                actions: <Widget>[
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.of(context)
+                                          .pop(); // Close the dialog
+                                      // Navigate to the login page
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => const Bebe()),
+                                      );
+                                    },
+                                    child: const Text('OK'),
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+                        } else {
+                          // Registration failed, show an error message to the user
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('Erreur lors de l\'inscription.'),
+                              backgroundColor: Color(0xFFF28482),
+                              elevation: 30,
+                            ),
+                          );
+                        }
+                      }
+                    })
               ]),
               Positioned(
                 top: 200,
@@ -283,14 +315,14 @@ class _BebeAddState extends State<BebeAdd> {
                   width: 60,
                 ),
               ),
-              Positioned(
-                top: MediaQuery.of(context).size.height * 0.6,
-                left: 20,
-                child: Image.asset(
-                  "assets/image/pied.png",
-                  width: 60,
-                ),
-              ),
+              // Positioned(
+              //   top: MediaQuery.of(context).size.height * 0.6,
+              //   left: 20,
+              //   child: Image.asset(
+              //     "assets/image/pied.png",
+              //     width: 60,
+              //   ),
+              // ),
               Positioned(
                 top: MediaQuery.of(context).size.height * 0.3,
                 left: 20,

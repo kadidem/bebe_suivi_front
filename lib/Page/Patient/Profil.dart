@@ -180,7 +180,7 @@ class _ProfilState extends State<Profil> {
                       CustomButton(
                         text: "Déconnexion",
                         onTap: () {
-                          Navigator.push(
+                          Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
                                 builder: (context) => const Connexion()),

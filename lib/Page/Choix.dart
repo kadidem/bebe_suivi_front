@@ -129,6 +129,7 @@
 //   }
 // }
 // //
+import 'package:bebe_suivi/Page/Docteur/InscriptionDoc.dart';
 import 'package:flutter/material.dart';
 import 'package:bebe_suivi/Page/Connexion.dart';
 import 'package:bebe_suivi/Page/Inscription.dart';
@@ -159,7 +160,7 @@ class _ChoixState extends State<Choix> {
             child: Image.asset('assets/image/question.png'),
           ),
           const Text(
-            "Estes vous un docteur ou un patient ",
+            "Etes vous un docteur ou un patient ",
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 25,
@@ -213,7 +214,7 @@ class _ChoixState extends State<Choix> {
                 Column(
                   children: [
                     Image.asset(
-                      'assets/image/docteur.png',
+                      'assets/image/choixdoc.png',
                       width: MediaQuery.of(context).size.width * 0.35,
                       height: MediaQuery.of(context).size.width * 0.35,
                     ),
@@ -230,7 +231,7 @@ class _ChoixState extends State<Choix> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => const Inscription(),
+                              builder: (context) => InscriptionDoc(),
                             ),
                           );
                         },

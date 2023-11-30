@@ -140,7 +140,7 @@ class _AcceuilpageState extends State<Acceuilpage> {
                             },
                             child: Column(
                               children: [
-                                Image.asset("image/images/docteur.png"),
+                                Image.asset("image/images/notif.png"),
                                 Text("Notifications")
                               ],
                             ),
@@ -177,7 +177,7 @@ class _AcceuilpageState extends State<Acceuilpage> {
                               },
                               child: Column(
                                 children: [
-                                  Image.asset("/image/images/patient.png"),
+                                  Image.asset("/image/images/admin.png"),
                                   Text("Administrations")
                                 ],
                               ),

@@ -1,3 +1,5 @@
+// import 'dart:convert';
+
 import 'dart:convert';
 
 import 'package:bebe_suivi/Modele/GrossesseModele.dart';
@@ -7,6 +9,7 @@ import 'package:bebe_suivi/Page/Patient/grossesse.dart';
 import 'package:bebe_suivi/Page/footer.dart';
 import 'package:bebe_suivi/Page/header.dart';
 import 'package:bebe_suivi/Service/GrossesseService.dart';
+import 'package:bebe_suivi/UserProvider.dart';
 import 'package:bebe_suivi/utils/constants.dart';
 import 'package:bebe_suivi/widgets/custom_button.dart';
 // import 'package:bebe_suivi/Page/header.dart';
@@ -23,6 +26,14 @@ class GrossesseListe extends StatefulWidget {
 class _GrossesseListeState extends State<GrossesseListe> {
   final GrossesseService service = GrossesseService();
   late List<GrossesseModel> listegros;
+  Future<List<GrossesseModel>> listGrossesse = Future.value([]);
+  @override
+  void initState() {
+    listGrossesse = service.getAllGrossesseByIdUser(
+      Provider.of<UserProvider>(context, listen: false).user?.idUser ?? 0,
+    );
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +53,7 @@ class _GrossesseListeState extends State<GrossesseListe> {
         ),
       ),
       FutureBuilder<List<GrossesseModel>>(
-        future: service.getAllGrossesse(),
+        future: listGrossesse,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const CircularProgressIndicator();
@@ -50,10 +61,11 @@ class _GrossesseListeState extends State<GrossesseListe> {
             return Text('Erreur: ${snapshot.error}');
           } else {
             List<GrossesseModel> grossesses = snapshot.data!;
+            // Provider.of<GrossesseProvider>(context, listen: false)
+            //     .setListeGrossesses(grossesses);
             Provider.of<GrossesseProvider>(context, listen: false)
-                .setListeGrossesses(grossesses);
-            this.listegros = grossesses;
-            print("salut=========  ${jsonEncode(this.listegros)}");
+                .listeGrossesses = grossesses;
+
             return Column(
               children: grossesses.map((grossesse) {
                 bool estTerminee = grossesse.dateAcouchement != null &&

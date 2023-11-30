@@ -8,24 +8,21 @@ class CustomButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: 24),
-      child: InkWell(
-        onTap: onTap,
-        child: Container(
-          alignment: Alignment.center,
-          width: MediaQuery.of(context).size.width * 0.4,
-          height: 40,
-          decoration: BoxDecoration(
-              color: primary, borderRadius: BorderRadius.circular(10)),
-          child: Text(
-            text,
-            style: TextStyle(
-                color: Colors.white,
-                fontFamily: "Poppins",
-                fontWeight: FontWeight.w700,
-                fontSize: 16),
-          ),
+    return SizedBox(
+      height: 40,
+      width: MediaQuery.of(context).size.width * 0.4,
+      child: MaterialButton(
+        color: primary,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        elevation: 5,
+        onPressed: onTap,
+        child: Text(
+          text,
+          style: const TextStyle(
+              color: Colors.white,
+              fontFamily: "Poppins",
+              fontWeight: FontWeight.w700,
+              fontSize: 16),
         ),
       ),
     );

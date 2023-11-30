@@ -9,28 +9,30 @@ class Rdv extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
-      body: Stack(
-        children: [
-          Column(children: [
-            Container(
-              width: MediaQuery.of(context).size.width,
-              child: Header(),
+      body: SingleChildScrollView(
+        child: Stack(
+          children: [
+            Column(children: [
+              Container(
+                width: MediaQuery.of(context).size.width,
+                child: Header(),
+              ),
+            ]),
+            Positioned(
+              top: 16, // Ajustez ces valeurs selon votre mise en page
+              left: 16,
+              child: IconButton(
+                  icon: const Icon(
+                    Icons.arrow_back,
+                    color: Colors.white,
+                    size: 30,
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  }),
             ),
-          ]),
-          Positioned(
-            top: 16, // Ajustez ces valeurs selon votre mise en page
-            left: 16,
-            child: IconButton(
-                icon: const Icon(
-                  Icons.arrow_back,
-                  color: Colors.white,
-                  size: 30,
-                ),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                }),
-          ),
-        ],
+          ],
+        ),
       ),
       bottomNavigationBar: Footer(),
     ));
